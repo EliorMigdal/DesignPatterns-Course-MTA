@@ -9,12 +9,22 @@ using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
 using System.Threading;
-using BasicFacebookFeatures.Logic;
+using BasicFacebookFeatures.Logic.Settings;
+using BasicFacebookFeatures.Logic.UserWrapper;
+using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types;
+using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper;
+using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper;
 
 namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
+        private LoginResult m_LoginResult;
+        private Album m_ProfilePictures;
+        private Album m_UserPictures;
+        private AppSettings m_AppSettings;
+        private UserWrapper m_UserWrapper = new UserWrapper();
+
         public FormMain()
         {
             InitializeComponent();
@@ -22,13 +32,29 @@ namespace BasicFacebookFeatures
             FacebookService.s_CollectionLimit = 25;
             initializeAppSettings();
             initializeConnectionOnStartup();
-            initializeItemsListBox();
+            initializeListBoxes();
         }
 
-        private LoginResult m_LoginResult;
-        private Album m_ProfilePictures;
-        private Album m_UserPictures;
-        private AppSettings m_AppSettings;
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+
+            if (isUserLoggedIn())
+            {
+                handleUserToken();
+            }
+
+            try
+            {
+                m_AppSettings.SaveToFile();
+            }
+
+            catch (Exception)
+            {
+                MessageBox.Show("We were unable to store user preferences at the time.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -61,6 +87,8 @@ namespace BasicFacebookFeatures
                 pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
                 buttonLogin.Enabled = false;
                 buttonLogout.Enabled = true;
+
+                initializeUserWrapper();
                 initializeAlbums();
                 initializeTrackBar();
                 initializeRememberMeCheckBox();
@@ -69,12 +97,21 @@ namespace BasicFacebookFeatures
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            FacebookService.LogoutWithUI();
-            buttonLogin.Text = "Login";
-            buttonLogin.BackColor = buttonLogout.BackColor;
-            m_LoginResult = null;
-            buttonLogin.Enabled = true;
-            buttonLogout.Enabled = false;
+            onLogout();
+        }
+
+        private void onLogout()
+        {
+            if (m_LoginResult != null)
+            {
+                FacebookService.LogoutWithUI();
+                buttonLogin.Text = "Login";
+                buttonLogin.BackColor = buttonLogout.BackColor;
+                handleUserToken();
+                m_LoginResult = null;
+                buttonLogin.Enabled = true;
+                buttonLogout.Enabled = false;
+            }
         }
 
         private void initializeAlbums()
@@ -85,38 +122,65 @@ namespace BasicFacebookFeatures
         private void initializeTrackBar()
         {
             profilePictureTrackBar.Minimum = 0;
-            profilePictureTrackBar.Maximum = Math.Min(5, (int) m_ProfilePictures.Count);
+            profilePictureTrackBar.Maximum = Math.Min(5, (int) m_ProfilePictures?.Count);
             profilePictureTrackBar.Visible = true;
         }
 
         private void profilePictureTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            if (m_ProfilePictures != null)
-            {
-                pictureBoxProfile.ImageLocation = m_ProfilePictures.Photos[profilePictureTrackBar.Value].PictureNormalURL;
-            }
+            onProfilePictureTrackBarValueChanged();
+        }
+
+        private void onProfilePictureTrackBarValueChanged()
+        {
+            pictureBoxProfile.ImageLocation = m_ProfilePictures?.Photos[profilePictureTrackBar.Value].PictureNormalURL;
         }
 
         private void rememberMeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            onRemeberMeCheckBoxChanged();
+
+            m_AppSettings.SaveToFile();
+        }
+
+        private void onRemeberMeCheckBoxChanged()
+        {
             if (rememberMeCheckBox.Checked)
             {
                 m_AppSettings.RememberUser = true;
-                m_AppSettings.Token = m_LoginResult.FacebookOAuthResult.AccessToken;
             }
 
             else
             {
                 m_AppSettings.RememberUser = false;
-                m_AppSettings.Token = string.Empty;
+            }
+        }
+
+        private void handleUserToken()
+        {
+            if (m_AppSettings.RememberUser)
+            {
+                m_AppSettings.Token = m_LoginResult.AccessToken;
             }
 
-            m_AppSettings.SaveToFile();
+            else
+            {
+                m_AppSettings.Token = string.Empty;
+            }
         }
 
         private void initializeAppSettings()
         {
-            m_AppSettings = AppSettings.LoadFromFile();
+            try
+            {
+                m_AppSettings = AppSettings.LoadFromFile();
+            }
+
+            catch (Exception)
+            {
+                MessageBox.Show("We were unable to load user preferences at the time.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void initializeConnectionOnStartup()
@@ -133,55 +197,43 @@ namespace BasicFacebookFeatures
         {
             rememberMeCheckBox.Visible = true;
         }
+        
+        private void initializeListBoxes()
+        {
+            initializeItemsListBox();
+            initializeElementsListBox();
+        }
 
         private void initializeItemsListBox()
         {
             itemsListBox.Items.Clear();
-            itemsListBox.Items.Add("Albums");
-            itemsListBox.Items.Add("Events");
-            itemsListBox.Items.Add("Friends");
-            itemsListBox.Items.Add("Liked Pages");
+            itemsListBox.DisplayMember = "Name";
+            itemsListBox.Visible = true;
+            
+            foreach (IUserCollectionsWrapper userItem in m_UserWrapper.UserItems)
+            {
+                itemsListBox.Items.Add(userItem);
+            }
+        }
+
+        private void initializeElementsListBox()
+        {
+            elementsListBox.Visible = true;
         }
 
         private void itemsListBox_Click(object sender, EventArgs e)
         {
-            string selected = itemsListBox.SelectedItem.ToString();
-            List<string> items = new List<string>();
-
-            if (selected.Equals("Albums"))
+            if (itemsListBox.SelectedItems.Count == 1)
             {
-                foreach (Album album in m_LoginResult.LoggedInUser.Albums)
+                IUserCollectionsWrapper selectedItem = itemsListBox.SelectedItem as IUserCollectionsWrapper;
+
+                elementsListBox.Items.Clear();
+                elementsListBox.DisplayMember = "Name";
+
+                foreach (IUserItemWrapper userItem in selectedItem.ItemWrapperCollection)
                 {
-                    items.Add(album.Name);
+                    elementsListBox.Items.Add(userItem);
                 }
-            }
-
-            else if (selected.Equals("Events"))
-            {
-                foreach (Event userEvent in m_LoginResult.LoggedInUser.Events)
-                {
-                    items.Add(userEvent.Name);
-                }
-            }
-
-            else if (selected.Equals("Friends"))
-            {
-                //hard-coded
-            }
-
-            else
-            {
-                foreach (Page userEvent in m_LoginResult.LoggedInUser.LikedPages)
-                {
-                    items.Add(userEvent.Name);
-                }
-            }
-
-            elementsListBox.Items.Clear();
-
-            foreach (string item in items)
-            {
-                elementsListBox.Items.Add(item);
             }
         }
 
@@ -228,6 +280,16 @@ namespace BasicFacebookFeatures
                 }
             }
 
+        }
+
+        private void initializeUserWrapper()
+        {
+            m_UserWrapper.UserData = m_LoginResult.LoggedInUser;
+        }
+
+        private bool isUserLoggedIn()
+        {
+            return m_LoginResult != null;
         }
     }
 }

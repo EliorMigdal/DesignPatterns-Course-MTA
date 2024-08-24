@@ -1,0 +1,21 @@
+﻿using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper;
+using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types;
+using FacebookWrapper.ObjectModel;
+using System.Collections.ObjectModel;
+
+namespace BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types
+{
+    public class UserEventsWrapper : IUserCollectionsWrapper
+    {
+        public string Name => "Events";
+        public Collection<IUserItemWrapper> ItemWrapperCollection { get; set; } = new Collection<IUserItemWrapper>();
+
+        public UserEventsWrapper(Collection<Event> i_Events)
+        {
+            foreach (Event userEvent in i_Events)
+            {
+                ItemWrapperCollection.Add(new EventWrapper(userEvent));
+            }
+        }
+    }
+}

@@ -42,6 +42,7 @@
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.textBoxAppID = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.setProfilePictureButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedElementPictureBox)).BeginInit();
@@ -95,6 +96,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.setProfilePictureButton);
             this.tabPage1.Controls.Add(this.selectedElementPictureBox);
             this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Controls.Add(this.elementsListBox);
@@ -122,6 +124,7 @@
             this.selectedElementPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.selectedElementPictureBox.TabIndex = 60;
             this.selectedElementPictureBox.TabStop = false;
+            this.selectedElementPictureBox.Visible = false;
             // 
             // panel1
             // 
@@ -138,6 +141,7 @@
             this.elementsListBox.Name = "elementsListBox";
             this.elementsListBox.Size = new System.Drawing.Size(238, 184);
             this.elementsListBox.TabIndex = 59;
+            this.elementsListBox.Visible = false;
             this.elementsListBox.Click += new System.EventHandler(this.elementsListBox_Click);
             // 
             // itemsListBox
@@ -148,6 +152,7 @@
             this.itemsListBox.Name = "itemsListBox";
             this.itemsListBox.Size = new System.Drawing.Size(238, 130);
             this.itemsListBox.TabIndex = 58;
+            this.itemsListBox.Visible = false;
             this.itemsListBox.Click += new System.EventHandler(this.itemsListBox_Click);
             // 
             // rememberMeCheckBox
@@ -186,7 +191,7 @@
             this.textBoxAppID.Name = "textBoxAppID";
             this.textBoxAppID.Size = new System.Drawing.Size(237, 24);
             this.textBoxAppID.TabIndex = 54;
-            this.textBoxAppID.Text = "1450160541956417";
+            this.textBoxAppID.Text = "868047088601231";
             // 
             // tabPage2
             // 
@@ -197,6 +202,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // setProfilePictureButton
+            // 
+            this.setProfilePictureButton.Location = new System.Drawing.Point(43, 228);
+            this.setProfilePictureButton.Name = "setProfilePictureButton";
+            this.setProfilePictureButton.Size = new System.Drawing.Size(142, 24);
+            this.setProfilePictureButton.TabIndex = 61;
+            this.setProfilePictureButton.Text = "Set Profile Picture";
+            this.setProfilePictureButton.UseVisualStyleBackColor = true;
+            this.setProfilePictureButton.Visible = false;
             // 
             // FormMain
             // 
@@ -235,6 +250,7 @@
         private System.Windows.Forms.ListBox itemsListBox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox selectedElementPictureBox;
+        private System.Windows.Forms.Button setProfilePictureButton;
     }
 }
 

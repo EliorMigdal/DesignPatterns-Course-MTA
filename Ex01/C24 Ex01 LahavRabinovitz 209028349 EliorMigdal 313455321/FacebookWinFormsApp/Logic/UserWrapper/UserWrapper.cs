@@ -1,0 +1,37 @@
+﻿using FacebookWrapper.ObjectModel;
+using System.Collections.ObjectModel;
+using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper;
+using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types;
+
+namespace BasicFacebookFeatures.Logic.UserWrapper
+{
+    public class UserWrapper
+    {
+        private User m_UserData;
+        public User UserData 
+        { 
+            get
+            {
+                return m_UserData;
+            }
+
+            set
+            {
+                if (m_UserData != value)
+                {
+                    m_UserData = value;
+                    initializeUserData();
+                }
+            }
+        }
+        public Collection<IUserCollectionsWrapper> UserItems { get; set; } = new Collection<IUserCollectionsWrapper>();
+
+        private void initializeUserData()
+        {
+            UserItems.Clear();
+            UserItems.Add(new UserEventsWrapper(UserData.Events));
+            UserItems.Add(new UserAlbumsWrapper(UserData.Albums));
+            UserItems.Add(new UserLikedPagesWrapper(UserData.LikedPages));
+        }
+    }
+}

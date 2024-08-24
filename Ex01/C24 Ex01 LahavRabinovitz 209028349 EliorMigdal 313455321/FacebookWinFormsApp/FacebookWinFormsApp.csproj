@@ -95,7 +95,16 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logic\AppSettings.cs" />
+    <Compile Include="Logic\Settings\AppSettings.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\IUserCollectionsWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\IUserItemWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\AlbumWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\EventWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\LikedPageWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserAlbumsWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserEventsWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserLikedPagesWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserWrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">

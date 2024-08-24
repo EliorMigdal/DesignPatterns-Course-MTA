@@ -1,17 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Xml.Serialization;
 
-namespace BasicFacebookFeatures.Logic
+namespace BasicFacebookFeatures.Logic.Settings
 {
-    public class AppSettings
+    public sealed class AppSettings
     {
+        private static readonly object rm_CreationLockContext = new object();
+        private static AppSettings m_Instance;
+        public static AppSettings Instance
+        {
+            get
+            {
+                if (m_Instance == null)
+                {
+                    lock (rm_CreationLockContext)
+                    {
+                        if (m_Instance == null)
+                        {
+                            m_Instance = new AppSettings();
+                        }
+                    }
+                }
+
+                return m_Instance;
+            }
+        }
+
         public bool RememberUser { get; set; } = false;
         public string Token { get; set; } = string.Empty;
+
+        private AppSettings() { }
 
         public void SaveToFile()
         {
