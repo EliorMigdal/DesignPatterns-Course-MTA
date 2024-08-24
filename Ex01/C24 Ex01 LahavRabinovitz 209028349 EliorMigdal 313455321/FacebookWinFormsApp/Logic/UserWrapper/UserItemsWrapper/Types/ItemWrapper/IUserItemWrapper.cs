@@ -3,5 +3,6 @@
     public interface IUserItemWrapper
     {
         string Name { get; }
+        string Picture { get; set; }
     }
 }

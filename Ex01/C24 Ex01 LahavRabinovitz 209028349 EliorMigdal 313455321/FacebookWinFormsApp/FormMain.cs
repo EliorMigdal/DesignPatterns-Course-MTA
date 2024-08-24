@@ -32,7 +32,6 @@ namespace BasicFacebookFeatures
             FacebookService.s_CollectionLimit = 25;
             initializeAppSettings();
             initializeConnectionOnStartup();
-            initializeListBoxes();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -100,6 +99,7 @@ namespace BasicFacebookFeatures
                 initializeAlbums();
                 initializeTrackBar();
                 initializeRememberMeCheckBox();
+                initializeListBoxes();
             }
         }
 
@@ -147,8 +147,6 @@ namespace BasicFacebookFeatures
         private void rememberMeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             onRemeberMeCheckBoxChanged();
-
-            m_AppSettings.SaveToFile();
         }
 
         private void onRemeberMeCheckBoxChanged()
@@ -198,6 +196,7 @@ namespace BasicFacebookFeatures
                 m_LoginResult = FacebookService.Connect(m_AppSettings.Token);
                 onLogin();
                 initializeRememberMeCheckBox();
+                rememberMeCheckBox.Checked = true;
             }
         }
 
@@ -227,6 +226,7 @@ namespace BasicFacebookFeatures
         private void initializeElementsListBox()
         {
             elementsListBox.Visible = true;
+            selectedElementPictureBox.Visible = true;
         }
 
         private void itemsListBox_Click(object sender, EventArgs e)
@@ -247,47 +247,11 @@ namespace BasicFacebookFeatures
 
         private void elementsListBox_Click(object sender, EventArgs e)
         {
-            string selected = elementsListBox.SelectedItem.ToString();
-            string selectedItemTypes = itemsListBox.SelectedItem.ToString();
-
-            if (selectedItemTypes.Equals("Albums"))
+            if (elementsListBox.SelectedItems.Count == 1)
             {
-                foreach (Album album in m_LoginResult.LoggedInUser.Albums)
-                {
-                    if (album.Name.Equals(selected))
-                    {
-                        selectedElementPictureBox.ImageLocation = album.PictureAlbumURL;
-                    }
-                }
+                IUserItemWrapper selectedItem = elementsListBox.SelectedItem as IUserItemWrapper;
+                selectedElementPictureBox.ImageLocation = selectedItem.Picture;
             }
-
-            else if (selectedItemTypes.Equals("Events"))
-            {
-                foreach (Event userEvent in m_LoginResult.LoggedInUser.Events)
-                {
-                    if (userEvent.Name.Equals(selected))
-                    {
-                        selectedElementPictureBox.ImageLocation = userEvent.PictureNormalURL;
-                    }
-                }
-            }
-
-            else if (selectedItemTypes.Equals("Friends"))
-            {
-                //hard-coded
-            }
-
-            else
-            {
-                foreach (Page page in m_LoginResult.LoggedInUser.LikedPages)
-                {
-                    if (page.Name.Equals(selected))
-                    {
-                        selectedElementPictureBox.ImageLocation = page.PictureNormalURL;
-                    }
-                }
-            }
-
         }
 
         private void initializeUserWrapper()

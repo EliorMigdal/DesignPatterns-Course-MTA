@@ -6,11 +6,13 @@ namespace BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWra
     {
         public string Name { get; set; }
         public Album Album { get; set; }
+        public string Picture { get; set; }
 
         public AlbumWrapper(Album i_Album)
         {
             Album = i_Album;
             Name = i_Album.Name;
+            Picture = i_Album.PictureAlbumURL;
         }
     }
 }

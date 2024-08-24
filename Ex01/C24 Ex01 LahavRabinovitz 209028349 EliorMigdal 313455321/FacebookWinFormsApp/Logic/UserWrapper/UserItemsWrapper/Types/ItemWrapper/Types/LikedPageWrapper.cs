@@ -6,11 +6,13 @@ namespace BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWra
     {
         public string Name { get; set; }
         public Page Page { get; set; }
+        public string Picture { get; set; }
 
         public LikedPageWrapper(Page i_Page)
         {
             Name = i_Page.Name;
             Page = i_Page;
+            Picture = i_Page.PictureNormalURL;
         }
     }
 }

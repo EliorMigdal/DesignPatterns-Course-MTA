@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types;
+using System.Collections.Generic;
 
 namespace BasicFacebookFeatures.Logic.UserWrapper
 {
@@ -24,7 +25,7 @@ namespace BasicFacebookFeatures.Logic.UserWrapper
                 }
             }
         }
-        public Collection<IUserCollectionsWrapper> UserItems { get; set; } = new Collection<IUserCollectionsWrapper>();
+        public List<IUserCollectionsWrapper> UserItems { get; set; } = new List<IUserCollectionsWrapper>();
 
         private void initializeUserData()
         {
