@@ -33,8 +33,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.itemsPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.setProfilePictureButton = new System.Windows.Forms.Button();
             this.selectedElementPictureBox = new System.Windows.Forms.PictureBox();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.elementsListBox = new System.Windows.Forms.ListBox();
             this.itemsListBox = new System.Windows.Forms.ListBox();
             this.rememberMeCheckBox = new System.Windows.Forms.CheckBox();
@@ -42,7 +43,6 @@
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.textBoxAppID = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.setProfilePictureButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedElementPictureBox)).BeginInit();
@@ -96,9 +96,9 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.itemsPanel);
             this.tabPage1.Controls.Add(this.setProfilePictureButton);
             this.tabPage1.Controls.Add(this.selectedElementPictureBox);
-            this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Controls.Add(this.elementsListBox);
             this.tabPage1.Controls.Add(this.itemsListBox);
             this.tabPage1.Controls.Add(this.rememberMeCheckBox);
@@ -116,6 +116,27 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // itemsPanel
+            // 
+            this.itemsPanel.AutoScroll = true;
+            this.itemsPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.itemsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.itemsPanel.Location = new System.Drawing.Point(3, 314);
+            this.itemsPanel.Name = "itemsPanel";
+            this.itemsPanel.Size = new System.Drawing.Size(821, 162);
+            this.itemsPanel.TabIndex = 62;
+            this.itemsPanel.WrapContents = false;
+            // 
+            // setProfilePictureButton
+            // 
+            this.setProfilePictureButton.Location = new System.Drawing.Point(43, 228);
+            this.setProfilePictureButton.Name = "setProfilePictureButton";
+            this.setProfilePictureButton.Size = new System.Drawing.Size(142, 24);
+            this.setProfilePictureButton.TabIndex = 61;
+            this.setProfilePictureButton.Text = "Set Profile Picture";
+            this.setProfilePictureButton.UseVisualStyleBackColor = true;
+            this.setProfilePictureButton.Visible = false;
+            // 
             // selectedElementPictureBox
             // 
             this.selectedElementPictureBox.Location = new System.Drawing.Point(754, 168);
@@ -125,13 +146,6 @@
             this.selectedElementPictureBox.TabIndex = 60;
             this.selectedElementPictureBox.TabStop = false;
             this.selectedElementPictureBox.Visible = false;
-            // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(22, 309);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(790, 164);
-            this.panel1.TabIndex = 55;
             // 
             // elementsListBox
             // 
@@ -178,6 +192,7 @@
             // 
             // pictureBoxProfile
             // 
+            this.pictureBoxProfile.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBoxProfile.Location = new System.Drawing.Point(18, 84);
             this.pictureBoxProfile.Name = "pictureBoxProfile";
             this.pictureBoxProfile.Size = new System.Drawing.Size(189, 168);
@@ -202,16 +217,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // setProfilePictureButton
-            // 
-            this.setProfilePictureButton.Location = new System.Drawing.Point(43, 228);
-            this.setProfilePictureButton.Name = "setProfilePictureButton";
-            this.setProfilePictureButton.Size = new System.Drawing.Size(142, 24);
-            this.setProfilePictureButton.TabIndex = 61;
-            this.setProfilePictureButton.Text = "Set Profile Picture";
-            this.setProfilePictureButton.UseVisualStyleBackColor = true;
-            this.setProfilePictureButton.Visible = false;
             // 
             // FormMain
             // 
@@ -248,9 +253,9 @@
         private System.Windows.Forms.CheckBox rememberMeCheckBox;
         private System.Windows.Forms.ListBox elementsListBox;
         private System.Windows.Forms.ListBox itemsListBox;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox selectedElementPictureBox;
         private System.Windows.Forms.Button setProfilePictureButton;
+        private System.Windows.Forms.FlowLayoutPanel itemsPanel;
     }
 }
 
