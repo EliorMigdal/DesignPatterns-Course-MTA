@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
-using System.Threading;
 using BasicFacebookFeatures.Logic.Settings;
 using BasicFacebookFeatures.Logic.UserWrapper;
-using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types;
+using BasicFacebookFeatures.Data;
 
 namespace BasicFacebookFeatures
 {
@@ -239,6 +234,16 @@ namespace BasicFacebookFeatures
                 elementsListBox.Items.Clear();
                 elementsListBox.DisplayMember = "Name";
 
+                if (selectedItem.ItemWrapperCollection.Count == 0)
+                {
+                    List<EventData> eventDatas = EventData.LoadEventData();
+
+                    foreach (EventData userItem in eventDatas)
+                    {
+                        elementsListBox.Items.Add(new EventWrapper(userItem));
+                    }
+                }
+
                 foreach (IUserItemWrapper userItem in selectedItem.ItemWrapperCollection)
                 {
                     elementsListBox.Items.Add(userItem);
@@ -255,6 +260,7 @@ namespace BasicFacebookFeatures
 
                 selectedElementPictureBox.ImageLocation = selectedItem.Picture;
                 IPanelViewable selectedViewable = selectedItem as IPanelViewable;
+
                 if (selectedViewable != null)
                 {
                     foreach(Control control in selectedViewable.Controls)

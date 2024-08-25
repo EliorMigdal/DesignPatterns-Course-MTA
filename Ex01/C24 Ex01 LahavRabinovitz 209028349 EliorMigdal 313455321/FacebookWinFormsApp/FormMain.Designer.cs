@@ -33,7 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.itemsPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.itemsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.setProfilePictureButton = new System.Windows.Forms.Button();
             this.selectedElementPictureBox = new System.Windows.Forms.PictureBox();
             this.elementsListBox = new System.Windows.Forms.ListBox();
@@ -119,13 +119,18 @@
             // itemsPanel
             // 
             this.itemsPanel.AutoScroll = true;
-            this.itemsPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.itemsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.itemsPanel.Location = new System.Drawing.Point(3, 314);
+            this.itemsPanel.BackColor = System.Drawing.Color.Gainsboro;
+            this.itemsPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.itemsPanel.ColumnCount = 1;
+            this.itemsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.itemsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.itemsPanel.Location = new System.Drawing.Point(18, 322);
             this.itemsPanel.Name = "itemsPanel";
-            this.itemsPanel.Size = new System.Drawing.Size(821, 162);
+            this.itemsPanel.RowCount = 1;
+            this.itemsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.itemsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.itemsPanel.Size = new System.Drawing.Size(800, 150);
             this.itemsPanel.TabIndex = 62;
-            this.itemsPanel.WrapContents = false;
             // 
             // setProfilePictureButton
             // 
@@ -255,7 +260,7 @@
         private System.Windows.Forms.ListBox itemsListBox;
         private System.Windows.Forms.PictureBox selectedElementPictureBox;
         private System.Windows.Forms.Button setProfilePictureButton;
-        private System.Windows.Forms.FlowLayoutPanel itemsPanel;
+        private System.Windows.Forms.TableLayoutPanel itemsPanel;
     }
 }
 

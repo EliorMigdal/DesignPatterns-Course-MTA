@@ -20,7 +20,7 @@ namespace BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWra
                 if (m_Controls == null)
                 {
                     m_Controls = new Collection<Control>();
-                    initializeControl();
+                    initializeControls();
                 }
 
                 return m_Controls;
@@ -34,8 +34,17 @@ namespace BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWra
             Picture = i_Album.PictureAlbumURL;
         }
 
-        public void initializeControl() 
+        public void initializeControls() 
         {
+            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
+            {
+                Size = new Size(800, 150),
+                Location = new Point(10, 10),
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = false,
+                AutoScroll = true
+            };
+
             foreach (Photo photo in Album.Photos)
             {
                 PictureBox selectedPictureBox = new PictureBox
@@ -45,8 +54,11 @@ namespace BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWra
                     Size = new Size(100, 100),
                     Margin = new Padding(5)
                 };
-                m_Controls.Add(selectedPictureBox);
+
+                flowLayoutPanel.Controls.Add(selectedPictureBox);
             }
+
+            m_Controls.Add(flowLayoutPanel);
         }
     }
 }
