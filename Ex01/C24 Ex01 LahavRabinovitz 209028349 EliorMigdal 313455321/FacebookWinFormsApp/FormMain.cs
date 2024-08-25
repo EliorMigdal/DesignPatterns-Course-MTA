@@ -254,22 +254,12 @@ namespace BasicFacebookFeatures
                 itemsPanel.Controls.Clear();
 
                 selectedElementPictureBox.ImageLocation = selectedItem.Picture;
-                //itemsPanel.controls.add(selectedItems.ContentGenerator.GenerateContent())
-                AlbumWrapper selectedAlbum = selectedItem as AlbumWrapper;
-                if (selectedAlbum != null)
-                { 
-                    foreach(Photo photo in selectedAlbum.Album.Photos)
+                IPanelViewable selectedViewable = selectedItem as IPanelViewable;
+                if (selectedViewable != null)
+                {
+                    foreach(Control control in selectedViewable.Controls)
                     {
-                        PictureBox selectedPictureBox = new PictureBox
-                        {
-                            ImageLocation = photo.PictureNormalURL, // Set the image location
-                            SizeMode = PictureBoxSizeMode.StretchImage, // Optional: Stretch the image to fit the PictureBox
-                            Size = new Size(100, 100), // Set the size of the PictureBox
-                            Margin = new Padding(5) // Set margin for spacing between pictures
-                        };
-
-                        itemsPanel.Visible = true;
-                        itemsPanel.Controls.Add(selectedPictureBox);
+                        itemsPanel.Controls.Add(control);
                     }
                 }
             }

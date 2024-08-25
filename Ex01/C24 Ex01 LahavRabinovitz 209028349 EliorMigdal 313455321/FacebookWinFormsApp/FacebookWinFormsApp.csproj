@@ -100,6 +100,7 @@
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\IUserItemWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\AlbumWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\EventWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\IPanelViewable.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\LikedPageWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserAlbumsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserEventsWrapper.cs" />
