@@ -124,7 +124,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\EventData.cs" />
+    <Compile Include="CustomeData\EventData.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,12 +136,17 @@
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\IUserItemWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\AlbumWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\EventWrapper.cs" />
-    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\IPanelViewable.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\LikedPageWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserAlbumsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserEventsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserLikedPagesWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserWrapper.cs" />
+    <Compile Include="PanelConversion\IPanelViewable.cs" />
+    <Compile Include="PanelConversion\PanelConvertorsFactory.cs" />
+    <Compile Include="PanelConversion\Types\AlbumWrapperConverter.cs" />
+    <Compile Include="PanelConversion\Types\EventWrapperConverter.cs" />
+    <Compile Include="PanelConversion\Types\FriendWrapperConverter.cs" />
+    <Compile Include="PanelConversion\Types\LikedPageWrapperConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">
@@ -173,9 +178,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="delete.png" />
-    <None Include="Resources\tech.jpg" />
-    <None Include="Resources\delete.png" />
+    <Content Include="Resources\tech.png" />
+    <Content Include="Resources\summerbeach.png" />
+    <None Include="tech.png" />
+    <None Include="summerbeach.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,5 +1,4 @@
 ﻿using FacebookWrapper.ObjectModel;
-using System.Collections.ObjectModel;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types;
 using System.Collections.Generic;
@@ -26,6 +25,7 @@ namespace BasicFacebookFeatures.Logic.UserWrapper
             }
         }
         public List<IUserCollectionsWrapper> UserItems { get; set; } = new List<IUserCollectionsWrapper>();
+        public string ProfilePicture { get; set; }
 
         private void initializeUserData()
         {

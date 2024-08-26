@@ -9,7 +9,8 @@ using BasicFacebookFeatures.Logic.UserWrapper;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types;
-using BasicFacebookFeatures.Data;
+using BasicFacebookFeatures.CustomeData;
+using BasicFacebookFeatures.PanelConversion;
 
 namespace BasicFacebookFeatures
 {
@@ -17,9 +18,9 @@ namespace BasicFacebookFeatures
     {
         private LoginResult m_LoginResult;
         private Album m_ProfilePictures;
-        private Album m_UserPictures;
         private AppSettings m_AppSettings;
-        private UserWrapper m_UserWrapper = new UserWrapper();
+        private readonly UserWrapper rm_UserWrapper = new UserWrapper();
+        private readonly PanelConvertorsFactory rm_ConverterFactory = new PanelConvertorsFactory();
 
         public FormMain()
         {
@@ -85,15 +86,17 @@ namespace BasicFacebookFeatures
         {
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
             {
-                buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
+                buttonLogin.Text = "Logged in!";
                 buttonLogin.BackColor = Color.LightGreen;
                 pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
                 buttonLogin.Enabled = false;
                 buttonLogout.Enabled = true;
 
+                initializeWelcomeLabel();
                 initializeUserWrapper();
                 initializeAlbums();
                 initializeTrackBar();
+                initializeSetPictureButton();
                 initializeRememberMeCheckBox();
                 initializeListBoxes();
             }
@@ -138,6 +141,7 @@ namespace BasicFacebookFeatures
         private void onProfilePictureTrackBarValueChanged()
         {
             pictureBoxProfile.ImageLocation = m_ProfilePictures?.Photos[profilePictureTrackBar.Value].PictureNormalURL;
+            handleSetProfilePictureState();
         }
 
         private void rememberMeCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -213,7 +217,7 @@ namespace BasicFacebookFeatures
             itemsListBox.DisplayMember = "Name";
             itemsListBox.Visible = true;
             
-            foreach (IUserCollectionsWrapper userItem in m_UserWrapper.UserItems)
+            foreach (IUserCollectionsWrapper userItem in rm_UserWrapper.UserItems)
             {
                 itemsListBox.Items.Add(userItem);
             }
@@ -234,16 +238,6 @@ namespace BasicFacebookFeatures
                 elementsListBox.Items.Clear();
                 elementsListBox.DisplayMember = "Name";
 
-                if (selectedItem.ItemWrapperCollection.Count == 0)
-                {
-                    List<EventData> eventDatas = EventData.LoadEventData();
-
-                    foreach (EventData userItem in eventDatas)
-                    {
-                        elementsListBox.Items.Add(new EventWrapper(userItem));
-                    }
-                }
-
                 foreach (IUserItemWrapper userItem in selectedItem.ItemWrapperCollection)
                 {
                     elementsListBox.Items.Add(userItem);
@@ -259,11 +253,11 @@ namespace BasicFacebookFeatures
                 itemsPanel.Controls.Clear();
 
                 selectedElementPictureBox.ImageLocation = selectedItem.Picture;
-                IPanelViewable selectedViewable = selectedItem as IPanelViewable;
+                IPanelViewable selectedViewable = rm_ConverterFactory.CreatePanelConvertor(selectedItem);
 
                 if (selectedViewable != null)
                 {
-                    foreach(Control control in selectedViewable.Controls)
+                    foreach (Control control in selectedViewable.Controls)
                     {
                         itemsPanel.Controls.Add(control);
                     }
@@ -273,12 +267,47 @@ namespace BasicFacebookFeatures
 
         private void initializeUserWrapper()
         {
-            m_UserWrapper.UserData = m_LoginResult.LoggedInUser;
+            rm_UserWrapper.UserData = m_LoginResult.LoggedInUser;
+            rm_UserWrapper.ProfilePicture = pictureBoxProfile.ImageLocation;
         }
 
         private bool isUserLoggedIn()
         {
             return m_LoginResult != null;
+        }
+
+        private void initializeSetPictureButton()
+        {
+            setProfilePictureButton.Visible = true;
+        }
+
+        private void initializeWelcomeLabel()
+        {
+            welcomeLabel.Text = m_LoginResult.LoggedInUser.Name;
+            welcomeLabel.Visible = true;
+        }
+
+        private void setProfilePictureButton_Click(object sender, EventArgs e)
+        {
+            onSetProfilePicture();
+        }
+
+        private void onSetProfilePicture()
+        {
+            rm_UserWrapper.ProfilePicture = pictureBoxProfile.ImageLocation;
+        }
+
+        private void handleSetProfilePictureState()
+        {
+            if (rm_UserWrapper.ProfilePicture.Equals(pictureBoxProfile.ImageLocation))
+            {
+                setProfilePictureButton.Enabled = false;
+            }
+
+            else
+            {
+                setProfilePictureButton.Enabled = true;
+            }
         }
     }
 }

@@ -5,27 +5,6 @@ namespace BasicFacebookFeatures.Logic.Settings
 {
     public sealed class AppSettings
     {
-        private static readonly object rm_CreationLockContext = new object();
-        private static AppSettings m_Instance;
-        public static AppSettings Instance
-        {
-            get
-            {
-                if (m_Instance == null)
-                {
-                    lock (rm_CreationLockContext)
-                    {
-                        if (m_Instance == null)
-                        {
-                            m_Instance = new AppSettings();
-                        }
-                    }
-                }
-
-                return m_Instance;
-            }
-        }
-
         public bool RememberUser { get; set; } = false;
         public string Token { get; set; } = string.Empty;
 

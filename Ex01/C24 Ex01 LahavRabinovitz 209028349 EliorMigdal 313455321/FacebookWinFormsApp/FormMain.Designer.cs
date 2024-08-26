@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.welcomeLabel = new System.Windows.Forms.Label();
             this.itemsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.setProfilePictureButton = new System.Windows.Forms.Button();
             this.selectedElementPictureBox = new System.Windows.Forms.PictureBox();
@@ -52,7 +53,7 @@
             // 
             // buttonLogin
             // 
-            this.buttonLogin.Location = new System.Drawing.Point(18, 17);
+            this.buttonLogin.Location = new System.Drawing.Point(10, 17);
             this.buttonLogin.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(130, 32);
@@ -64,7 +65,7 @@
             // buttonLogout
             // 
             this.buttonLogout.Enabled = false;
-            this.buttonLogout.Location = new System.Drawing.Point(155, 17);
+            this.buttonLogout.Location = new System.Drawing.Point(148, 17);
             this.buttonLogout.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLogout.Name = "buttonLogout";
             this.buttonLogout.Size = new System.Drawing.Size(130, 32);
@@ -96,6 +97,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.welcomeLabel);
             this.tabPage1.Controls.Add(this.itemsPanel);
             this.tabPage1.Controls.Add(this.setProfilePictureButton);
             this.tabPage1.Controls.Add(this.selectedElementPictureBox);
@@ -116,6 +118,16 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // welcomeLabel
+            // 
+            this.welcomeLabel.AutoSize = true;
+            this.welcomeLabel.Location = new System.Drawing.Point(30, 56);
+            this.welcomeLabel.Name = "welcomeLabel";
+            this.welcomeLabel.Size = new System.Drawing.Size(85, 18);
+            this.welcomeLabel.TabIndex = 63;
+            this.welcomeLabel.Text = "Elior Migdal";
+            this.welcomeLabel.Visible = false;
+            // 
             // itemsPanel
             // 
             this.itemsPanel.AutoScroll = true;
@@ -124,23 +136,25 @@
             this.itemsPanel.ColumnCount = 1;
             this.itemsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.itemsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.itemsPanel.Location = new System.Drawing.Point(18, 322);
+            this.itemsPanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+            this.itemsPanel.Location = new System.Drawing.Point(10, 283);
             this.itemsPanel.Name = "itemsPanel";
             this.itemsPanel.RowCount = 1;
             this.itemsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.itemsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.itemsPanel.Size = new System.Drawing.Size(800, 150);
+            this.itemsPanel.Size = new System.Drawing.Size(809, 188);
             this.itemsPanel.TabIndex = 62;
             // 
             // setProfilePictureButton
             // 
-            this.setProfilePictureButton.Location = new System.Drawing.Point(43, 228);
+            this.setProfilePictureButton.Location = new System.Drawing.Point(10, 202);
             this.setProfilePictureButton.Name = "setProfilePictureButton";
-            this.setProfilePictureButton.Size = new System.Drawing.Size(142, 24);
+            this.setProfilePictureButton.Size = new System.Drawing.Size(130, 24);
             this.setProfilePictureButton.TabIndex = 61;
-            this.setProfilePictureButton.Text = "Set Profile Picture";
+            this.setProfilePictureButton.Text = "Set Picture";
             this.setProfilePictureButton.UseVisualStyleBackColor = true;
             this.setProfilePictureButton.Visible = false;
+            this.setProfilePictureButton.Click += new System.EventHandler(this.setProfilePictureButton_Click);
             // 
             // selectedElementPictureBox
             // 
@@ -177,7 +191,7 @@
             // rememberMeCheckBox
             // 
             this.rememberMeCheckBox.AutoSize = true;
-            this.rememberMeCheckBox.Location = new System.Drawing.Point(22, 56);
+            this.rememberMeCheckBox.Location = new System.Drawing.Point(148, 56);
             this.rememberMeCheckBox.Name = "rememberMeCheckBox";
             this.rememberMeCheckBox.Size = new System.Drawing.Size(126, 22);
             this.rememberMeCheckBox.TabIndex = 57;
@@ -188,9 +202,9 @@
             // 
             // profilePictureTrackBar
             // 
-            this.profilePictureTrackBar.Location = new System.Drawing.Point(18, 258);
+            this.profilePictureTrackBar.Location = new System.Drawing.Point(10, 232);
             this.profilePictureTrackBar.Name = "profilePictureTrackBar";
-            this.profilePictureTrackBar.Size = new System.Drawing.Size(189, 45);
+            this.profilePictureTrackBar.Size = new System.Drawing.Size(130, 45);
             this.profilePictureTrackBar.TabIndex = 56;
             this.profilePictureTrackBar.Visible = false;
             this.profilePictureTrackBar.ValueChanged += new System.EventHandler(this.profilePictureTrackBar_ValueChanged);
@@ -198,9 +212,9 @@
             // pictureBoxProfile
             // 
             this.pictureBoxProfile.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBoxProfile.Location = new System.Drawing.Point(18, 84);
+            this.pictureBoxProfile.Location = new System.Drawing.Point(10, 84);
             this.pictureBoxProfile.Name = "pictureBoxProfile";
-            this.pictureBoxProfile.Size = new System.Drawing.Size(189, 168);
+            this.pictureBoxProfile.Size = new System.Drawing.Size(130, 117);
             this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxProfile.TabIndex = 55;
             this.pictureBoxProfile.TabStop = false;
@@ -261,6 +275,7 @@
         private System.Windows.Forms.PictureBox selectedElementPictureBox;
         private System.Windows.Forms.Button setProfilePictureButton;
         private System.Windows.Forms.TableLayoutPanel itemsPanel;
+        private System.Windows.Forms.Label welcomeLabel;
     }
 }
 

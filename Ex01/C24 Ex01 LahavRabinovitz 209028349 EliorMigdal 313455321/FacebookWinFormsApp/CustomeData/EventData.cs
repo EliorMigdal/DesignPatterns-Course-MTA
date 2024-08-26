@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System.IO;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper;
 
-namespace BasicFacebookFeatures.Data
+namespace BasicFacebookFeatures.CustomeData
 {
     public class EventData : IUserItemWrapper
     {

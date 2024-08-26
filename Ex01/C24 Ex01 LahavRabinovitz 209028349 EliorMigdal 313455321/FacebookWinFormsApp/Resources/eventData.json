@@ -2,7 +2,7 @@
   "Events": [
     {
       "Name": "Summer Beach Party",
-	  "Picture": "Resources/summerbeach.jpg",
+	  "Picture": "summerbeach.png",
       "HostName": "John Doe",
       "StartTime": "2024-08-30T14:00:00",
       "EndTime": "2024-08-30T18:00:00",
@@ -15,7 +15,7 @@
     },
     {
       "Name": "Tech Conference 2024",
-	  "Picture": "Resources/tech.jpg",
+	  "Picture": "tech.png",
       "HostName": "Tech Innovations Inc.",
       "StartTime": "2024-09-10T09:00:00",
       "EndTime": "2024-09-12T17:00:00",
