@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace BasicFacebookFeatures.PanelConversion.Types
 {

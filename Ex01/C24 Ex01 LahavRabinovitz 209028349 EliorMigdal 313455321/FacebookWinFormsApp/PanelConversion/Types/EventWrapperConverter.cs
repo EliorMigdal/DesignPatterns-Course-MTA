@@ -7,7 +7,6 @@ using GMap.NET;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using System.Drawing;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types;
 

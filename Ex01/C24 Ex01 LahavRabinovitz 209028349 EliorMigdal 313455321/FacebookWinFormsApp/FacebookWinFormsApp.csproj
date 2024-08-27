@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomeData\EventData.cs" />
+    <Compile Include="CustomeData\Friend.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,9 +137,11 @@
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\IUserItemWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\AlbumWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\EventWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\FriendWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\LikedPageWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserAlbumsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserEventsWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserFriendsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserLikedPagesWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserWrapper.cs" />
     <Compile Include="PanelConversion\IPanelViewable.cs" />
