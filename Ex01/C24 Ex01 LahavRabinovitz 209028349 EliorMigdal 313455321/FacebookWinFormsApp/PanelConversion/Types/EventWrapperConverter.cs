@@ -73,8 +73,8 @@ namespace BasicFacebookFeatures.PanelConversion.Types
                 RowCount = 2,
                 RowStyles =
                 {
-                    new ColumnStyle(SizeType.Percent, 75F),
-                    new ColumnStyle(SizeType.Percent, 25F)
+                    new ColumnStyle(SizeType.Percent, 80F),
+                    new ColumnStyle(SizeType.Percent, 20F)
                 },
                 AutoSize = true,
                 AutoSizeMode = AutoSizeMode.GrowAndShrink
@@ -124,8 +124,8 @@ namespace BasicFacebookFeatures.PanelConversion.Types
                 RowCount = 2,
                 RowStyles =
                 {
-                    new RowStyle(SizeType.Percent, 20F),
-                    new RowStyle(SizeType.Percent, 80F)
+                    new RowStyle(SizeType.Percent, 80F),
+                    new RowStyle(SizeType.Percent, 20F)
                 }
             };
 
@@ -152,8 +152,9 @@ namespace BasicFacebookFeatures.PanelConversion.Types
                 AutoSize = true
             };
 
-            innerTable.Controls.Add(eventLabel, 0, 0);
-            innerTable.Controls.Add(map, 0, 1);
+            innerTable.Controls.Add(map, 0, 0);
+            innerTable.Controls.Add(eventLabel, 0, 1);
+            
             io_Panel.Controls.Add(innerTable, 1, 0);
         }
 
@@ -233,7 +234,8 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             ListBox friendsAttending = new ListBox
             {
                 SelectionMode = SelectionMode.None,
-                DisplayMember = "Name"
+                DisplayMember = "Name",
+                Dock = DockStyle.Fill
             };
 
             foreach (EventData.Attendee atendee in EventData.Attendees)

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
-using System.IO;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper;
 
 namespace BasicFacebookFeatures.CustomeData
@@ -30,19 +29,8 @@ namespace BasicFacebookFeatures.CustomeData
 
         public static List<EventData> LoadEventData()
         {
-            Root eventData = new Root();
-
-            string filePath = "\\\\Mac\\iCloud\\Windows Shared Directory\\DesignPatterns-Course-MTA\\Ex01\\C24 Ex01 LahavRabinovitz 209028349 EliorMigdal 313455321\\FacebookWinFormsApp\\Resources\\eventData.json";
-
-            if (File.Exists(filePath))
-            {
-                using (StreamReader streamReader = new StreamReader(filePath))
-                using (JsonTextReader jsonReader = new JsonTextReader(streamReader))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    eventData = serializer.Deserialize<Root>(jsonReader);
-                }
-            }
+            string fileNameContent = Properties.Resources.eventData;
+            Root eventData = JsonConvert.DeserializeObject<Root>(fileNameContent);
 
             return eventData.Events;
         }

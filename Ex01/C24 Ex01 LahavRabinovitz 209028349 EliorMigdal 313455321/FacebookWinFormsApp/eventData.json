@@ -1,0 +1,48 @@
+{
+  "Events": [
+    {
+      "Name": "Summer Beach Party",
+      "HostName": "John Doe",
+	"Picture": "summerbeach.png",
+      "StartTime": "2024-08-30T14:00:00",
+      "EndTime": "2024-08-30T18:00:00",
+      "Location": "Tel Aviv, Israel",
+      "Description": "Join us for a fun beach party with music, games, and food! Enjoy live DJ performances, beach volleyball, and a barbecue.\n\nLine-Up:\n14:00 - Opening Music and Welcome\n15:00 - Live DJ Performance\n16:00 - Beach Volleyball Tournament\n17:00 - Barbecue and Socializing\n18:00 - Event Close",
+      "Attendees": [
+        { "Name": "Alice Smith", "IsAttending": true },
+        { "Name": "Bob Johnson", "IsAttending": true },
+        { "Name": "Eve Walker", "IsAttending": true },
+        { "Name": "Franklin Perez", "IsAttending": true },
+        { "Name": "Grace Lee", "IsAttending": true },
+        { "Name": "Henry Adams", "IsAttending": false },
+        { "Name": "Isabella Cooper", "IsAttending": true },
+        { "Name": "Jack Thompson", "IsAttending": true },
+        { "Name": "Karen Green", "IsAttending": true },
+        { "Name": "Liam Harris", "IsAttending": true },
+        { "Name": "Mia Robinson", "IsAttending": false }
+      ]
+    },
+    {
+      "Name": "Tech Conference 2024",
+      "HostName": "Tech Innovations Inc.",
+	"Picture": "tech.png",
+      "StartTime": "2024-09-10T09:00:00",
+      "EndTime": "2024-09-12T17:00:00",
+      "Location": "Eilat, Israel",
+      "Description": "A three-day conference on the latest trends in technology. Featuring workshops, keynote speeches, and networking opportunities.\n\nSpeakers:\nDr. Emily Chen - Artificial Intelligence and Machine Learning\nMr. Ahmed Khan - The Future of Blockchain Technology\nMs. Laura Martinez - Innovations in Cybersecurity\nDr. Alan Smith - Advances in Quantum Computing",
+      "Attendees": [
+        { "Name": "Charlie Brown", "IsAttending": true },
+        { "Name": "David Williams", "IsAttending": false },
+        { "Name": "Olivia Martinez", "IsAttending": true },
+        { "Name": "Noah Lee", "IsAttending": true },
+        { "Name": "Sophia Garcia", "IsAttending": true },
+        { "Name": "Lucas White", "IsAttending": true },
+        { "Name": "Emma Clark", "IsAttending": false },
+        { "Name": "Benjamin Lewis", "IsAttending": true },
+        { "Name": "Chloe Hernandez", "IsAttending": true },
+        { "Name": "Daniel Wilson", "IsAttending": true },
+        { "Name": "Ava King", "IsAttending": true }
+      ]
+    }
+  ]
+}

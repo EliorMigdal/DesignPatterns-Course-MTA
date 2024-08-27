@@ -61,6 +61,24 @@ namespace BasicFacebookFeatures.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;Events&quot;: [
+        ///    {
+        ///      &quot;Name&quot;: &quot;Summer Beach Party&quot;,
+        ///      &quot;HostName&quot;: &quot;John Doe&quot;,
+        ///	&quot;Picture&quot;: &quot;summerbeach.png&quot;,
+        ///      &quot;StartTime&quot;: &quot;2024-08-30T14:00:00&quot;,
+        ///      &quot;EndTime&quot;: &quot;2024-08-30T18:00:00&quot;,
+        ///      &quot;Location&quot;: &quot;Tel Aviv, Israel&quot;,
+        ///      &quot;Description&quot;: &quot;Join us for a fun beach party with music, games, and food! Enjoy live DJ performances, beach volleyball, and a barbecue.\n\nLine-Up:\n14:00 - Opening Music and Welcome\n15:00 - Live DJ Performance\n16:00 - Beach Volleyball Tournament\n17:00 -  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string eventData {
+            get {
+                return ResourceManager.GetString("eventData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap summerbeach {

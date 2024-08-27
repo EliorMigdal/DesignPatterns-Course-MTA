@@ -295,6 +295,7 @@ namespace BasicFacebookFeatures
         private void onSetProfilePicture()
         {
             rm_UserWrapper.ProfilePicture = pictureBoxProfile.ImageLocation;
+            handleSetProfilePictureState();
         }
 
         private void handleSetProfilePictureState()
