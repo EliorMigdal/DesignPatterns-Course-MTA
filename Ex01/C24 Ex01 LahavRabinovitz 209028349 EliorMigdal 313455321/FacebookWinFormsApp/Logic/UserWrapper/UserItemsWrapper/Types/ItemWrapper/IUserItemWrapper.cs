@@ -2,7 +2,7 @@
 {
     public interface IUserItemWrapper
     {
-        string Name { get; }
+        string Name { get; set; }
         string Picture { get; set; }
     }
 }

@@ -32,7 +32,7 @@
             this.buttonLogout = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.homeTab = new System.Windows.Forms.TabPage();
             this.welcomeLabel = new System.Windows.Forms.Label();
             this.itemsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.setProfilePictureButton = new System.Windows.Forms.Button();
@@ -43,12 +43,26 @@
             this.profilePictureTrackBar = new System.Windows.Forms.TrackBar();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.textBoxAppID = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.wallTab = new System.Windows.Forms.TabPage();
+            this.postInfoLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.postDataLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.commentsListBox = new System.Windows.Forms.ListBox();
+            this.timedPostButton = new System.Windows.Forms.Button();
+            this.wallDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.filterWallComboBox = new System.Windows.Forms.ComboBox();
+            this.sortWallComboBox = new System.Windows.Forms.ComboBox();
+            this.postToCloseFriendsCheckBox = new System.Windows.Forms.CheckBox();
+            this.postButton = new System.Windows.Forms.Button();
+            this.newPostTextBox = new System.Windows.Forms.TextBox();
+            this.wallListBox = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.homeTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedElementPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.profilePictureTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
+            this.wallTab.SuspendLayout();
+            this.postInfoLayoutPanel.SuspendLayout();
+            this.postDataLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonLogin
@@ -86,8 +100,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.homeTab);
+            this.tabControl1.Controls.Add(this.wallTab);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -95,28 +109,28 @@
             this.tabControl1.Size = new System.Drawing.Size(835, 510);
             this.tabControl1.TabIndex = 54;
             // 
-            // tabPage1
+            // homeTab
             // 
-            this.tabPage1.Controls.Add(this.welcomeLabel);
-            this.tabPage1.Controls.Add(this.itemsPanel);
-            this.tabPage1.Controls.Add(this.setProfilePictureButton);
-            this.tabPage1.Controls.Add(this.selectedElementPictureBox);
-            this.tabPage1.Controls.Add(this.elementsListBox);
-            this.tabPage1.Controls.Add(this.itemsListBox);
-            this.tabPage1.Controls.Add(this.rememberMeCheckBox);
-            this.tabPage1.Controls.Add(this.profilePictureTrackBar);
-            this.tabPage1.Controls.Add(this.pictureBoxProfile);
-            this.tabPage1.Controls.Add(this.textBoxAppID);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.buttonLogout);
-            this.tabPage1.Controls.Add(this.buttonLogin);
-            this.tabPage1.Location = new System.Drawing.Point(4, 27);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(827, 479);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.homeTab.Controls.Add(this.welcomeLabel);
+            this.homeTab.Controls.Add(this.itemsPanel);
+            this.homeTab.Controls.Add(this.setProfilePictureButton);
+            this.homeTab.Controls.Add(this.selectedElementPictureBox);
+            this.homeTab.Controls.Add(this.elementsListBox);
+            this.homeTab.Controls.Add(this.itemsListBox);
+            this.homeTab.Controls.Add(this.rememberMeCheckBox);
+            this.homeTab.Controls.Add(this.profilePictureTrackBar);
+            this.homeTab.Controls.Add(this.pictureBoxProfile);
+            this.homeTab.Controls.Add(this.textBoxAppID);
+            this.homeTab.Controls.Add(this.label1);
+            this.homeTab.Controls.Add(this.buttonLogout);
+            this.homeTab.Controls.Add(this.buttonLogin);
+            this.homeTab.Location = new System.Drawing.Point(4, 27);
+            this.homeTab.Name = "homeTab";
+            this.homeTab.Padding = new System.Windows.Forms.Padding(3);
+            this.homeTab.Size = new System.Drawing.Size(827, 479);
+            this.homeTab.TabIndex = 0;
+            this.homeTab.Text = "Home";
+            this.homeTab.UseVisualStyleBackColor = true;
             // 
             // welcomeLabel
             // 
@@ -227,15 +241,156 @@
             this.textBoxAppID.TabIndex = 54;
             this.textBoxAppID.Text = "868047088601231";
             // 
-            // tabPage2
+            // wallTab
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 27);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(827, 479);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.wallTab.Controls.Add(this.postInfoLayoutPanel);
+            this.wallTab.Controls.Add(this.timedPostButton);
+            this.wallTab.Controls.Add(this.wallDateTimePicker);
+            this.wallTab.Controls.Add(this.filterWallComboBox);
+            this.wallTab.Controls.Add(this.sortWallComboBox);
+            this.wallTab.Controls.Add(this.postToCloseFriendsCheckBox);
+            this.wallTab.Controls.Add(this.postButton);
+            this.wallTab.Controls.Add(this.newPostTextBox);
+            this.wallTab.Controls.Add(this.wallListBox);
+            this.wallTab.Location = new System.Drawing.Point(4, 27);
+            this.wallTab.Name = "wallTab";
+            this.wallTab.Padding = new System.Windows.Forms.Padding(3);
+            this.wallTab.Size = new System.Drawing.Size(827, 479);
+            this.wallTab.TabIndex = 1;
+            this.wallTab.Text = "Wall";
+            this.wallTab.UseVisualStyleBackColor = true;
+            // 
+            // postInfoLayoutPanel
+            // 
+            this.postInfoLayoutPanel.BackColor = System.Drawing.Color.LightGray;
+            this.postInfoLayoutPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.postInfoLayoutPanel.ColumnCount = 1;
+            this.postInfoLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.postInfoLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.postInfoLayoutPanel.Controls.Add(this.postDataLayoutPanel, 0, 1);
+            this.postInfoLayoutPanel.Enabled = false;
+            this.postInfoLayoutPanel.Location = new System.Drawing.Point(448, 39);
+            this.postInfoLayoutPanel.Name = "postInfoLayoutPanel";
+            this.postInfoLayoutPanel.RowCount = 2;
+            this.postInfoLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.postInfoLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.postInfoLayoutPanel.Size = new System.Drawing.Size(373, 282);
+            this.postInfoLayoutPanel.TabIndex = 8;
+            // 
+            // postDataLayoutPanel
+            // 
+            this.postDataLayoutPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.postDataLayoutPanel.ColumnCount = 2;
+            this.postDataLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.postDataLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.postDataLayoutPanel.Controls.Add(this.commentsListBox, 1, 0);
+            this.postDataLayoutPanel.Enabled = false;
+            this.postDataLayoutPanel.Location = new System.Drawing.Point(4, 144);
+            this.postDataLayoutPanel.Name = "postDataLayoutPanel";
+            this.postDataLayoutPanel.RowCount = 1;
+            this.postDataLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.postDataLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.postDataLayoutPanel.Size = new System.Drawing.Size(365, 134);
+            this.postDataLayoutPanel.TabIndex = 0;
+            // 
+            // commentsListBox
+            // 
+            this.commentsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.commentsListBox.Enabled = false;
+            this.commentsListBox.FormattingEnabled = true;
+            this.commentsListBox.ItemHeight = 18;
+            this.commentsListBox.Location = new System.Drawing.Point(186, 4);
+            this.commentsListBox.Name = "commentsListBox";
+            this.commentsListBox.Size = new System.Drawing.Size(175, 126);
+            this.commentsListBox.TabIndex = 0;
+            // 
+            // timedPostButton
+            // 
+            this.timedPostButton.BackColor = System.Drawing.Color.LightYellow;
+            this.timedPostButton.Enabled = false;
+            this.timedPostButton.Location = new System.Drawing.Point(526, 452);
+            this.timedPostButton.Name = "timedPostButton";
+            this.timedPostButton.Size = new System.Drawing.Size(117, 23);
+            this.timedPostButton.TabIndex = 7;
+            this.timedPostButton.Text = "Timed Post";
+            this.timedPostButton.UseVisualStyleBackColor = false;
+            this.timedPostButton.Click += new System.EventHandler(this.timedPostButton_Click);
+            // 
+            // wallDateTimePicker
+            // 
+            this.wallDateTimePicker.Enabled = false;
+            this.wallDateTimePicker.Location = new System.Drawing.Point(130, 8);
+            this.wallDateTimePicker.Name = "wallDateTimePicker";
+            this.wallDateTimePicker.Size = new System.Drawing.Size(185, 24);
+            this.wallDateTimePicker.TabIndex = 6;
+            // 
+            // filterWallComboBox
+            // 
+            this.filterWallComboBox.Enabled = false;
+            this.filterWallComboBox.FormattingEnabled = true;
+            this.filterWallComboBox.Location = new System.Drawing.Point(321, 7);
+            this.filterWallComboBox.Name = "filterWallComboBox";
+            this.filterWallComboBox.Size = new System.Drawing.Size(121, 26);
+            this.filterWallComboBox.TabIndex = 5;
+            this.filterWallComboBox.Text = "Filter By";
+            this.filterWallComboBox.SelectedIndexChanged += new System.EventHandler(this.filterWallComboBox_SelectedIndexChanged);
+            // 
+            // sortWallComboBox
+            // 
+            this.sortWallComboBox.Enabled = false;
+            this.sortWallComboBox.FormattingEnabled = true;
+            this.sortWallComboBox.Location = new System.Drawing.Point(3, 6);
+            this.sortWallComboBox.Name = "sortWallComboBox";
+            this.sortWallComboBox.Size = new System.Drawing.Size(121, 26);
+            this.sortWallComboBox.Sorted = true;
+            this.sortWallComboBox.TabIndex = 4;
+            this.sortWallComboBox.Text = "Sort By";
+            this.sortWallComboBox.SelectedIndexChanged += new System.EventHandler(this.sortWallComboBox_SelectedIndexChanged);
+            // 
+            // postToCloseFriendsCheckBox
+            // 
+            this.postToCloseFriendsCheckBox.AutoSize = true;
+            this.postToCloseFriendsCheckBox.Enabled = false;
+            this.postToCloseFriendsCheckBox.Location = new System.Drawing.Point(676, 452);
+            this.postToCloseFriendsCheckBox.Name = "postToCloseFriendsCheckBox";
+            this.postToCloseFriendsCheckBox.Size = new System.Drawing.Size(145, 22);
+            this.postToCloseFriendsCheckBox.TabIndex = 3;
+            this.postToCloseFriendsCheckBox.Text = "Close friends only";
+            this.postToCloseFriendsCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // postButton
+            // 
+            this.postButton.BackColor = System.Drawing.Color.LightGreen;
+            this.postButton.Enabled = false;
+            this.postButton.Location = new System.Drawing.Point(445, 452);
+            this.postButton.Name = "postButton";
+            this.postButton.Size = new System.Drawing.Size(75, 23);
+            this.postButton.TabIndex = 2;
+            this.postButton.Text = "Post";
+            this.postButton.UseVisualStyleBackColor = false;
+            this.postButton.Click += new System.EventHandler(this.postButton_Click);
+            // 
+            // newPostTextBox
+            // 
+            this.newPostTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.newPostTextBox.Enabled = false;
+            this.newPostTextBox.Location = new System.Drawing.Point(445, 327);
+            this.newPostTextBox.Multiline = true;
+            this.newPostTextBox.Name = "newPostTextBox";
+            this.newPostTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.newPostTextBox.Size = new System.Drawing.Size(376, 119);
+            this.newPostTextBox.TabIndex = 1;
+            // 
+            // wallListBox
+            // 
+            this.wallListBox.Enabled = false;
+            this.wallListBox.FormattingEnabled = true;
+            this.wallListBox.ItemHeight = 18;
+            this.wallListBox.Location = new System.Drawing.Point(3, 39);
+            this.wallListBox.Name = "wallListBox";
+            this.wallListBox.Size = new System.Drawing.Size(439, 436);
+            this.wallListBox.TabIndex = 0;
+            this.wallListBox.SelectedIndexChanged += new System.EventHandler(this.wallListBox_SelectedIndexChanged);
             // 
             // FormMain
             // 
@@ -249,11 +404,15 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.homeTab.ResumeLayout(false);
+            this.homeTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedElementPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.profilePictureTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
+            this.wallTab.ResumeLayout(false);
+            this.wallTab.PerformLayout();
+            this.postInfoLayoutPanel.ResumeLayout(false);
+            this.postDataLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -264,8 +423,8 @@
 		private System.Windows.Forms.Button buttonLogout;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.TabPage homeTab;
+		private System.Windows.Forms.TabPage wallTab;
         private System.Windows.Forms.TextBox textBoxAppID;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.TrackBar profilePictureTrackBar;
@@ -276,6 +435,17 @@
         private System.Windows.Forms.Button setProfilePictureButton;
         private System.Windows.Forms.TableLayoutPanel itemsPanel;
         private System.Windows.Forms.Label welcomeLabel;
+        private System.Windows.Forms.TextBox newPostTextBox;
+        private System.Windows.Forms.ListBox wallListBox;
+        private System.Windows.Forms.Button postButton;
+        private System.Windows.Forms.CheckBox postToCloseFriendsCheckBox;
+        private System.Windows.Forms.ComboBox sortWallComboBox;
+        private System.Windows.Forms.DateTimePicker wallDateTimePicker;
+        private System.Windows.Forms.ComboBox filterWallComboBox;
+        private System.Windows.Forms.Button timedPostButton;
+        private System.Windows.Forms.TableLayoutPanel postInfoLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel postDataLayoutPanel;
+        private System.Windows.Forms.ListBox commentsListBox;
     }
 }
 

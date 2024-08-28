@@ -15,6 +15,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
                 if (m_Controls == null)
                 {
                     m_Controls = new Collection<Control>();
+
                     initializeControls();
                 }
 
@@ -45,7 +46,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
                 PictureBox selectedPictureBox = new PictureBox
                 {
                     ImageLocation = photo.PictureNormalURL,
-                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    SizeMode = PictureBoxSizeMode.Zoom,
                     Size = new Size(150, 150),
                     Margin = new Padding(5),
                 };

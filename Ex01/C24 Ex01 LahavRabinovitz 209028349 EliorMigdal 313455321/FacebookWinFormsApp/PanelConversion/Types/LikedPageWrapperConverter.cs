@@ -1,8 +1,6 @@
 ﻿using BasicFacebookFeatures.CustomeData;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types;
-using BasicFacebookFeatures.Properties;
 using FacebookWrapper.ObjectModel;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
 
@@ -23,13 +21,14 @@ namespace BasicFacebookFeatures.PanelConversion.Types
                     m_Controls = new Collection<Control>();
                     initializeControls();
                 }
+
                 return m_Controls; 
             }
         }
 
-        public LikedPageWrapperConverter( LikedPageWrapper likedPageWrapper)
+        public LikedPageWrapperConverter(LikedPageWrapper i_LikedPageWrapper)
         {
-            LikedPagesData = likedPageWrapper.LikedPageData;
+            LikedPagesData = i_LikedPageWrapper.LikedPageData;
         }
 
         private void initializeControls()
@@ -46,7 +45,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
         {
             PictureBox pictureBox = new PictureBox
             {
-                ImageLocation = LikedPagesData.PagePicture,
+                Image = Properties.Resources.tech,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Dock = DockStyle.Fill,
                 Margin = new Padding(5),
@@ -82,8 +81,8 @@ namespace BasicFacebookFeatures.PanelConversion.Types
                 RowCount = 1,
                 ColumnStyles =
                 {
-                    new ColumnStyle(SizeType.Percent, 30F),
-                    new ColumnStyle(SizeType.Percent, 70F),
+                    new ColumnStyle(SizeType.Percent, 50F),
+                    new ColumnStyle(SizeType.Percent, 50F),
                 },
                 AutoSizeMode = AutoSizeMode.GrowAndShrink
             };

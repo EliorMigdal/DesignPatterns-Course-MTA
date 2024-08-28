@@ -2,6 +2,7 @@
 using System;
 using Newtonsoft.Json;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper;
+using System.Linq;
 
 namespace BasicFacebookFeatures.CustomeData
 {
@@ -21,6 +22,8 @@ namespace BasicFacebookFeatures.CustomeData
         public string Location { get; set; }
         public string Description { get; set; }
         public List<Attendee> Attendees { get; set; }
+        public int Attending => Attendees.Count(x => x.IsAttending);
+        public int Interested => Attendees.Count(x => !x.IsAttending);
 
         public class Root
         {
@@ -29,8 +32,8 @@ namespace BasicFacebookFeatures.CustomeData
 
         public static List<EventData> LoadEventData()
         {
-            string fileNameContent = Properties.Resources.eventData;
-            Root eventData = JsonConvert.DeserializeObject<Root>(fileNameContent);
+            string jsonContents = Properties.Resources.eventData;
+            Root eventData = JsonConvert.DeserializeObject<Root>(jsonContents);
 
             return eventData.Events;
         }

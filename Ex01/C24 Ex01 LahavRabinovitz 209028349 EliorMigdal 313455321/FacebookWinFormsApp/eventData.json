@@ -3,7 +3,7 @@
     {
       "Name": "Summer Beach Party",
       "HostName": "John Doe",
-	"Picture": "summerbeach.png",
+      "Picture": "summerbeach.png",
       "StartTime": "2024-08-30T14:00:00",
       "EndTime": "2024-08-30T18:00:00",
       "Location": "Tel Aviv, Israel",
@@ -25,7 +25,7 @@
     {
       "Name": "Tech Conference 2024",
       "HostName": "Tech Innovations Inc.",
-	"Picture": "tech.png",
+      "Picture": "tech.png",
       "StartTime": "2024-09-10T09:00:00",
       "EndTime": "2024-09-12T17:00:00",
       "Location": "Eilat, Israel",

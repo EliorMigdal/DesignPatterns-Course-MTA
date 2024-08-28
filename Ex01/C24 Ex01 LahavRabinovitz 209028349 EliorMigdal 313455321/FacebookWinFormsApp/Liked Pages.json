@@ -1,39 +1,23 @@
 {
   "LikedPages": [
     {
-      "Page": {
-        "Name": "Tech Enthusiasts",
-        "Category": "Technology",
-        "Posts": [
-          {
-            "Message": "Exploring the latest in AI technology!"
-          },
-          {
-            "Message": "Join us for a webinar on blockchain technology."
-          },
-          {
-            "Message": "New gadget review: The best smartphone of 2024."
-          }
-        ]
-      },
+      "Name": "Tech Enthusiasts",
+      "Category": "Technology",
+      "Posts": [
+        "Exploring the latest in AI technology!",
+        "Join us for a webinar on blockchain technology.",
+        "New gadget review: The best smartphone of 2024."
+      ],
       "Picture": "https://example.com/pictures/tech_enthusiasts.jpg"
     },
     {
-      "Page": {
-        "Name": "Travel Lovers",
-        "Category": "Travel",
-        "Posts": [
-          {
-            "Message": "Top 10 destinations for 2024!"
-           },
-          {
-            "Message": "Share your favorite travel photo in the comments!"
-          },
-          {
-            "Message": "Travel tips for backpackers: What to pack?"
-          }
-        ]
-      },
+      "Name": "Travel Lovers",
+      "Category": "Travel",
+      "Posts": [
+        "Top 10 destinations for 2024!",
+        "Share your favorite travel photo in the comments!",
+        "Travel tips for backpackers: What to pack?"
+      ],
       "Picture": "https://example.com/pictures/travel_lovers.jpg"
     }
   ]

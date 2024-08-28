@@ -133,6 +133,15 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\Comperator\IComperator.cs" />
+    <Compile Include="Logic\Comperator\Types\CommentsComperator.cs" />
+    <Compile Include="Logic\Comperator\Types\LikesComperator.cs" />
+    <Compile Include="Logic\Filterer\IFilterer.cs" />
+    <Compile Include="Logic\Filterer\Types\CheckInFilterer.cs" />
+    <Compile Include="Logic\Filterer\Types\CloseFriendsFilterer.cs" />
+    <Compile Include="Logic\Filterer\Types\DefaultFilterer.cs" />
+    <Compile Include="Logic\Filterer\Types\ImagePostFilterer.cs" />
+    <Compile Include="Logic\Filterer\Types\TextOnlyFilterer.cs" />
     <Compile Include="Logic\Settings\AppSettings.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\IUserCollectionsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\IUserItemWrapper.cs" />
@@ -140,19 +149,24 @@
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\EventWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\FriendWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\LikedPageWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\ItemWrapper\Types\PostWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserAlbumsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserEventsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserFriendsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserLikedPagesWrapper.cs" />
+    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserPostsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserWrapper.cs" />
     <Compile Include="PanelConversion\IPanelViewable.cs" />
-    <Compile Include="PanelConversion\PanelConvertorsFactory.cs" />
+    <Compile Include="PanelConversion\PanelConvertersFactory.cs" />
     <Compile Include="PanelConversion\Types\AlbumWrapperConverter.cs" />
     <Compile Include="PanelConversion\Types\EventWrapperConverter.cs" />
     <Compile Include="PanelConversion\Types\FriendWrapperConverter.cs" />
     <Compile Include="PanelConversion\Types\LikedPageWrapperConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimedPostForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,8 +180,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TimedPostForm.resx">
+      <DependentUpon>TimedPostForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="eventData.json" />
+    <None Include="batman.jpeg" />
     <Content Include="Liked Pages.json" />
+    <None Include="friends.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

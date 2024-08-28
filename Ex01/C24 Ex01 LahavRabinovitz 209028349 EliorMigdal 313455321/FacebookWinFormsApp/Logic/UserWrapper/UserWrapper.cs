@@ -2,6 +2,9 @@
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using BasicFacebookFeatures.CustomeData;
 
 namespace BasicFacebookFeatures.Logic.UserWrapper
 {
@@ -20,6 +23,7 @@ namespace BasicFacebookFeatures.Logic.UserWrapper
                 if (m_UserData != value)
                 {
                     m_UserData = value;
+
                     initializeUserData();
                 }
             }
@@ -30,9 +34,13 @@ namespace BasicFacebookFeatures.Logic.UserWrapper
         private void initializeUserData()
         {
             UserItems.Clear();
+
             UserItems.Add(new UserEventsWrapper(UserData.Events));
-            UserItems.Add(new UserAlbumsWrapper(UserData.Albums));
+            UserItems.Add(new UserAlbumsWrapper(new Collection<Album>(UserData.Albums
+            .Where(album => album.Photos.Count > 0)
+            .ToList())));
             UserItems.Add(new UserLikedPagesWrapper(UserData.LikedPages));
+            UserItems.Add(new UserFriendsWrapper(Friend.LoadFriends()));
         }
     }
 }

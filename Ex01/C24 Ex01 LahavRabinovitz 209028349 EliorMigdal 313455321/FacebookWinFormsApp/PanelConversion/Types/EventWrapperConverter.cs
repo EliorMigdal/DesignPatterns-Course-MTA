@@ -22,6 +22,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
                 if (m_Controls == null)
                 {
                     m_Controls = new Collection<Control>();
+
                     initializeControls();
                 }
 
@@ -92,7 +93,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             PictureBox pictureBox = new PictureBox
             {
                 Image = Resources.summerbeach, //ImageLocation = Event.PictureNormalURL,
-                SizeMode = PictureBoxSizeMode.Normal,
+                SizeMode = PictureBoxSizeMode.Zoom,
                 Dock = DockStyle.Fill,
                 Size = new Size(60, 60),
                 Margin = new Padding(5)
@@ -194,7 +195,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             Label durationLabel = new Label
             {
                 Dock = DockStyle.Fill,
-                Text = $"Duration: {(EventData.EndTime - EventData.StartTime)}", //(Event.EndTime - Event.StartTime).ToString(),
+                Text = $"Duration: {EventData.EndTime - EventData.StartTime}", //(Event.EndTime - Event.StartTime).ToString(),
                 TextAlign = ContentAlignment.MiddleLeft,
                 AutoSize = true
             };
@@ -223,7 +224,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
 
             Label attendingInfo = new Label
             {
-                Text = $"Attending: {EventData.Attendees.Count}{Environment.NewLine}Interested: {EventData.Attendees.Count}",
+                Text = $"Attending: {EventData.Attending}{Environment.NewLine}Interested: {EventData.Interested}",
                 //Text = $"Attending: {Event.AttendingCount}{Environment.NewLine}Interested: {Event.InterestedCount}",
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleCenter,

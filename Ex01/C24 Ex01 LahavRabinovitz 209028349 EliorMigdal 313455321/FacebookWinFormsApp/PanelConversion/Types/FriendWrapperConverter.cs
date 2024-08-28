@@ -21,11 +21,13 @@ namespace BasicFacebookFeatures.PanelConversion.Types
         {
             get
             {
-                if(m_Controls == null)
+                if (m_Controls == null)
                 {
                     m_Controls = new Collection<Control>();
+
                     initializeControls();
                 }
+
                 return m_Controls;
             }
         }
@@ -94,7 +96,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             {
                 PictureBox pictureBox = new PictureBox
                 {
-                    Image = Resources.summerbeach,
+                    Image = Resources.batman,
                     SizeMode = PictureBoxSizeMode.AutoSize,
                     Dock = DockStyle.Fill,
                     Size = new Size(60, 60),

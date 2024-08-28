@@ -22,7 +22,7 @@ namespace BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWra
         {
             Name = i_page.Name;
             LikedPageData = i_page;
-            Picture = i_page.PagePicture;
+            Picture = i_page.Picture;
         }
     }
 }
