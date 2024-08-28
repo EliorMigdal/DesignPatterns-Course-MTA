@@ -79,6 +79,33 @@ namespace BasicFacebookFeatures.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;LikedPages&quot;: [
+        ///    {
+        ///      &quot;Page&quot;: {
+        ///        &quot;Name&quot;: &quot;Tech Enthusiasts&quot;,
+        ///        &quot;Category&quot;: &quot;Technology&quot;,
+        ///        &quot;Posts&quot;: [
+        ///          {
+        ///            &quot;Message&quot;: &quot;Exploring the latest in AI technology!&quot;
+        ///          },
+        ///          {
+        ///            &quot;Message&quot;: &quot;Join us for a webinar on blockchain technology.&quot;
+        ///          },
+        ///          {
+        ///            &quot;Message&quot;: &quot;New gadget review: The best smartphone of 2024.&quot;
+        ///          }
+        ///        ]
+        ///      },
+        ///      &quot;Picture&quot;: &quot;https://example.com/pictures/tech_enthusia [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Liked_Pages {
+            get {
+                return ResourceManager.GetString("Liked_Pages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap summerbeach {

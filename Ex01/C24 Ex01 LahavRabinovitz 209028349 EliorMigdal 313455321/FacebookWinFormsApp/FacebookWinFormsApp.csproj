@@ -126,6 +126,7 @@
   <ItemGroup>
     <Compile Include="CustomeData\EventData.cs" />
     <Compile Include="CustomeData\Friend.cs" />
+    <Compile Include="CustomeData\LikedPageData.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +167,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="eventData.json" />
+    <Content Include="Liked Pages.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -5,7 +5,7 @@ using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper
 
 namespace BasicFacebookFeatures.CustomeData
 {
-    public class EventData : IUserItemWrapper
+    public class EventData
     {
         public class Attendee
         {
