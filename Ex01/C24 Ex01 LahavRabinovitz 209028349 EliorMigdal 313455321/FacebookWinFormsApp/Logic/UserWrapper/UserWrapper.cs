@@ -28,6 +28,7 @@ namespace BasicFacebookFeatures.Logic.UserWrapper
                 }
             }
         }
+
         public List<IUserCollectionsWrapper> UserItems { get; set; } = new List<IUserCollectionsWrapper>();
         public string ProfilePicture { get; set; }
 

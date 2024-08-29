@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
-using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper;
 using System.Linq;
 
 namespace BasicFacebookFeatures.CustomeData

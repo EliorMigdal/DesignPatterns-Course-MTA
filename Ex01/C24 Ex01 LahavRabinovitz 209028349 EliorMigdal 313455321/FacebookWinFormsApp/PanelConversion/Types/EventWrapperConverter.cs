@@ -29,7 +29,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
                 return m_Controls;
             }
         }
-        public Event Event { get; set; }
+
         public EventData EventData { get; set; }
 
         public EventWrapperConverter(EventWrapper i_EventWrapper)
@@ -92,7 +92,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
         {
             PictureBox pictureBox = new PictureBox
             {
-                Image = Resources.summerbeach, //ImageLocation = Event.PictureNormalURL,
+                Image = Resources.summerbeach,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Dock = DockStyle.Fill,
                 Size = new Size(60, 60),
@@ -107,7 +107,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             Label dateLabel = new Label
             {
                 Dock = DockStyle.Fill,
-                Text = $"Date: {EventData.StartTime}", //Text = $"Date: {Event.StartTime}",
+                Text = $"Date: {EventData.StartTime}",
                 TextAlign = ContentAlignment.MiddleCenter,
                 AutoSize = true
             };
@@ -146,7 +146,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
 
             Label eventLabel = new Label
             {
-                Text = EventData.Location, //Text = Event.Location,
+                Text = EventData.Location,
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleCenter,
                 AutoSize = true
@@ -171,7 +171,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             Label titleLabel = new Label
             {
                 Dock = DockStyle.Fill,
-                Text = $"Event: {EventData.Name}", //Text = Event.Name,
+                Text = $"Event: {EventData.Name}",
                 TextAlign = ContentAlignment.MiddleLeft,
                 AutoSize = true
             };
@@ -179,7 +179,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             Label descriptionLabel = new Label
             {
                 Dock = DockStyle.Fill,
-                Text = $"Description: {EventData.Description}", //Event.Description,
+                Text = $"Description: {EventData.Description}",
                 TextAlign = ContentAlignment.MiddleLeft,
                 AutoSize = true
             };
@@ -187,7 +187,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             Label hostsLabel = new Label
             {
                 Dock = DockStyle.Fill,
-                Text = $"Host: {EventData.HostName}", //Event.Owner.Name,
+                Text = $"Host: {EventData.HostName}",
                 TextAlign = ContentAlignment.MiddleLeft,
                 AutoSize = true
             };
@@ -195,7 +195,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             Label durationLabel = new Label
             {
                 Dock = DockStyle.Fill,
-                Text = $"Duration: {EventData.EndTime - EventData.StartTime}", //(Event.EndTime - Event.StartTime).ToString(),
+                Text = $"Duration: {EventData.EndTime - EventData.StartTime}",
                 TextAlign = ContentAlignment.MiddleLeft,
                 AutoSize = true
             };
@@ -225,7 +225,6 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             Label attendingInfo = new Label
             {
                 Text = $"Attending: {EventData.Attending}{Environment.NewLine}Interested: {EventData.Interested}",
-                //Text = $"Attending: {Event.AttendingCount}{Environment.NewLine}Interested: {Event.InterestedCount}",
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleCenter,
                 AutoSize = true
@@ -242,11 +241,6 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             {
                 friendsAttending.Items.Add(atendee);
             }
-
-            //foreach (User user in Event.InvitedUsers)
-            //{
-            //    friendsAttending.Items.Add(user.Name);
-            //}
 
             outerPanel.Controls.Add(attendingInfo, 0, 0);
             outerPanel.Controls.Add(friendsAttending, 0, 1);

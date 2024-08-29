@@ -1,6 +1,5 @@
 ﻿using BasicFacebookFeatures.CustomeData;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types;
-using FacebookWrapper.ObjectModel;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
 
@@ -8,8 +7,6 @@ namespace BasicFacebookFeatures.PanelConversion.Types
 {
     public class LikedPageWrapperConverter : IPanelViewable
     {
-        private LikedPageWrapper m_likedPageWrapper;
-        private Page LikedPages {  get; set; }
         private LikedPageData LikedPagesData {  get; set; }
         private Collection<Control> m_Controls;
         public Collection<Control> Controls
@@ -19,6 +16,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
                 if (m_Controls == null)
                 {
                     m_Controls = new Collection<Control>();
+
                     initializeControls();
                 }
 
@@ -53,7 +51,6 @@ namespace BasicFacebookFeatures.PanelConversion.Types
 
             io_tableLayoutPanel.Controls.Add(pictureBox, 0, 0);
         }
-
 
         private void initializePosts(TableLayoutPanel io_tableLayoutPanel)
         {

@@ -4,20 +4,13 @@ using System.Windows.Forms;
 using BasicFacebookFeatures.CustomeData;
 using System.Drawing;
 using BasicFacebookFeatures.Properties;
-using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures.PanelConversion.Types
 {
     public class FriendWrapperConverter : IPanelViewable
     {
-        private Collection<Control> m_Controls;
         private Friend m_Friend;
-
-        public FriendWrapperConverter(FriendWrapper i_Friend)
-        {
-            m_Friend = i_Friend.Friend;
-        }
-
+        private Collection<Control> m_Controls;
         public Collection<Control> Controls
         {
             get
@@ -33,9 +26,15 @@ namespace BasicFacebookFeatures.PanelConversion.Types
             }
         }
 
+        public FriendWrapperConverter(FriendWrapper i_Friend)
+        {
+            m_Friend = i_Friend.Friend;
+        }
+
         private void initializeControls()
         {
             TableLayoutPanel tableLayoutPanel = initializeGrid();
+
             initializeLeftColumn(ref tableLayoutPanel);
             initializeCenterColumn(ref tableLayoutPanel);
             initializeRightColumn(ref tableLayoutPanel);
@@ -128,7 +127,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
         {
             PictureBox profilePicture = new PictureBox
             {
-                Image = Resources.batman, //ImageLocation = Event.PictureNormalURL,
+                Image = Resources.batman,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Dock = DockStyle.Fill,
                 Size = new Size(60, 60),

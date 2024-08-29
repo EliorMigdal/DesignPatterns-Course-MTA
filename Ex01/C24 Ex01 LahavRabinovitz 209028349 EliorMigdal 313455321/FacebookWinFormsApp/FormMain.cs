@@ -23,10 +23,10 @@ namespace BasicFacebookFeatures
         private LoginResult m_LoginResult;
         private Album m_ProfilePictures;
         private AppSettings m_AppSettings;
-        private readonly UserWrapper rm_UserWrapper = new UserWrapper();
-        private readonly List<PostWrapper> rm_DisplayedPosts = new List<PostWrapper>();
-        private readonly List<PostWrapper> rm_AllPosts = new List<PostWrapper>();
-        private readonly string rm_AppID = "868047088601231";
+        private readonly UserWrapper r_UserWrapper = new UserWrapper();
+        private readonly List<PostWrapper> r_DisplayedPosts = new List<PostWrapper>();
+        private readonly List<PostWrapper> r_AllPosts = new List<PostWrapper>();
+        private readonly string r_AppID = "868047088601231";
 
         public FormMain()
         {
@@ -69,7 +69,7 @@ namespace BasicFacebookFeatures
         {
             m_LoginResult = FacebookService.Login
             (
-                rm_AppID,
+                r_AppID,
                 "email",
                 "public_profile",
                 "user_age_range",
@@ -86,28 +86,32 @@ namespace BasicFacebookFeatures
                 "user_videos"
             );
 
-            onLogin();
+            initializeUponLogin();
         }
 
-        private void onLogin()
+        private void initializeUponLogin()
         {
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage) && m_LoginResult.LoggedInUser != null)
             {
-                buttonLogin.Text = "Logged in!";
-                buttonLogin.BackColor = Color.LightGreen;
-                pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
-                buttonLogin.Enabled = false;
                 buttonLogout.Enabled = true;
-
+                pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
+                rememberMeCheckBox.Visible = true;
+                setProfilePictureButton.Visible = true;
+                handleLoginButton();
                 initializeUserWrapper();
                 initializeWallTab();
                 initializeWelcomeLabel();
                 initializeAlbums();
                 initializeTrackBar();
-                initializeSetPictureButton();
-                initializeRememberMeCheckBox();
                 initializeListBoxes();
             }
+        }
+
+        private void handleLoginButton()
+        {
+            buttonLogin.Text = "Logged in!";
+            buttonLogin.BackColor = Color.LightGreen;
+            buttonLogin.Enabled = false;
         }
 
         private void initializeWallTab()
@@ -131,17 +135,17 @@ namespace BasicFacebookFeatures
             wallListBox.DisplayMember = "Message";
             commentsListBox.DisplayMember = "Message";
 
-            foreach (Post post in rm_UserWrapper.UserData.Posts)
+            foreach (Post post in r_UserWrapper.UserData.Posts)
             {
                 if (!string.IsNullOrEmpty(post.Message))
                 {
                     PostWrapper postWrapper = new PostWrapper(post);
-                    rm_AllPosts.Add(postWrapper);
+                    r_AllPosts.Add(postWrapper);
                     wallListBox.Items.Add(postWrapper);
                 }
             }
 
-            rm_DisplayedPosts.AddRange(rm_AllPosts);
+            r_DisplayedPosts.AddRange(r_AllPosts);
         }
 
         private void initializeSortComboBox()
@@ -165,21 +169,26 @@ namespace BasicFacebookFeatures
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            onLogout();
+            performLogout();
         }
 
-        private void onLogout()
+        private void performLogout()
         {
             if (m_LoginResult != null)
             {
                 FacebookService.LogoutWithUI();
-                buttonLogin.Text = "Login";
-                buttonLogin.BackColor = buttonLogout.BackColor;
+                resetLoginButton();
                 handleUserToken();
                 m_LoginResult = null;
-                buttonLogin.Enabled = true;
                 buttonLogout.Enabled = false;
             }
+        }
+
+        private void resetLoginButton()
+        {
+            buttonLogin.Text = "Login";
+            buttonLogin.BackColor = buttonLogout.BackColor;
+            buttonLogin.Enabled = true;
         }
 
         private void initializeAlbums()
@@ -196,10 +205,10 @@ namespace BasicFacebookFeatures
 
         private void profilePictureTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            onProfilePictureTrackBarValueChanged();
+            switchProfilePictures();
         }
 
-        private void onProfilePictureTrackBarValueChanged()
+        private void switchProfilePictures()
         {
             pictureBoxProfile.ImageLocation = m_ProfilePictures?.Photos[profilePictureTrackBar.Value].PictureNormalURL;
             handleSetProfilePictureState();
@@ -207,10 +216,10 @@ namespace BasicFacebookFeatures
 
         private void rememberMeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            onRemeberMeCheckBoxChanged();
+            handleAppSettingsFlag();
         }
 
-        private void onRemeberMeCheckBoxChanged()
+        private void handleAppSettingsFlag()
         {
             if (rememberMeCheckBox.Checked)
             {
@@ -240,7 +249,7 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                m_AppSettings = AppSettings.LoadFromFile();
+                m_AppSettings = AppSettings.LoadAppSettings();
             }
 
             catch (Exception)
@@ -255,15 +264,10 @@ namespace BasicFacebookFeatures
             if (m_AppSettings.RememberUser)
             {
                 m_LoginResult = FacebookService.Connect(m_AppSettings.Token);
-                onLogin();
-                initializeRememberMeCheckBox();
+                initializeUponLogin();
+                rememberMeCheckBox.Visible = true;
                 rememberMeCheckBox.Checked = true;
             }
-        }
-
-        private void initializeRememberMeCheckBox()
-        {
-            rememberMeCheckBox.Visible = true;
         }
         
         private void initializeListBoxes()
@@ -274,11 +278,10 @@ namespace BasicFacebookFeatures
 
         private void initializeItemsListBox()
         {
-            itemsListBox.Items.Clear();
             itemsListBox.DisplayMember = "Name";
             itemsListBox.Visible = true;
             
-            foreach (IUserCollectionsWrapper userItem in rm_UserWrapper.UserItems)
+            foreach (IUserCollectionsWrapper userItem in r_UserWrapper.UserItems)
             {
                 itemsListBox.Items.Add(userItem);
             }
@@ -293,10 +296,10 @@ namespace BasicFacebookFeatures
 
         private void itemsListBox_Click(object sender, EventArgs e)
         {
-            onItemSelection();
+            fetchAndDisplaySelectedItems();
         }
 
-        private void onItemSelection()
+        private void fetchAndDisplaySelectedItems()
         {
             if (itemsListBox.SelectedItems.Count == 1)
             {
@@ -323,10 +326,10 @@ namespace BasicFacebookFeatures
 
         private void elementsListBox_Click(object sender, EventArgs e)
         {
-            onElementSelection();
+            handleElementSelection();
         }
 
-        private void onElementSelection()
+        private void handleElementSelection()
         {
             if (elementsListBox.SelectedItems.Count == 1)
             {
@@ -351,18 +354,21 @@ namespace BasicFacebookFeatures
 
         private void initializeUserWrapper()
         {
-            rm_UserWrapper.UserData = m_LoginResult.LoggedInUser;
-            rm_UserWrapper.ProfilePicture = pictureBoxProfile.ImageLocation;
+            try
+            {
+                r_UserWrapper.UserData = m_LoginResult.LoggedInUser;
+                r_UserWrapper.ProfilePicture = pictureBoxProfile.ImageLocation;
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error fetching user data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private bool isUserLoggedIn()
         {
             return m_LoginResult != null;
-        }
-
-        private void initializeSetPictureButton()
-        {
-            setProfilePictureButton.Visible = true;
         }
 
         private void initializeWelcomeLabel()
@@ -373,18 +379,18 @@ namespace BasicFacebookFeatures
 
         private void setProfilePictureButton_Click(object sender, EventArgs e)
         {
-            onSetProfilePicture();
+            setProfilePicture();
         }
 
-        private void onSetProfilePicture()
+        private void setProfilePicture()
         {
-            rm_UserWrapper.ProfilePicture = pictureBoxProfile.ImageLocation;
+            r_UserWrapper.ProfilePicture = pictureBoxProfile.ImageLocation;
             handleSetProfilePictureState();
         }
 
         private void handleSetProfilePictureState()
         {
-            if (rm_UserWrapper.ProfilePicture.Equals(pictureBoxProfile.ImageLocation))
+            if (r_UserWrapper.ProfilePicture.Equals(pictureBoxProfile.ImageLocation))
             {
                 setProfilePictureButton.Enabled = false;
             }
@@ -407,17 +413,17 @@ namespace BasicFacebookFeatures
 
         private void wallListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            onPostSelection();
+            displayPostData();
         }
 
-        private void onPostSelection()
+        private void displayPostData()
         {
-            if (wallListBox.SelectedItems.Count > 0)
+            if (wallListBox.SelectedItems.Count == 1)
             {
                 PostWrapper selectedPost = wallListBox.SelectedItem as PostWrapper;
+
                 clearPostInfoLayout();
                 commentsListBox.Items.Clear();
-
                 handlePostContent(selectedPost);
                 handlePostComments(selectedPost);
                 handlePostInfo(selectedPost);
@@ -434,17 +440,6 @@ namespace BasicFacebookFeatures
             };
 
             postInfoLayoutPanel.Controls.Add(postContents, 0, 0);
-        }
-
-        private void handlePostPicture(ref TableLayoutPanel io_TableLayout, PostWrapper i_PostWrapper)
-        {
-            PictureBox pictureBoxPicture = new PictureBox
-            {
-                ImageLocation = i_PostWrapper.Picture,
-                Dock = DockStyle.Fill
-            };
-
-            io_TableLayout.Controls.Add(pictureBoxPicture, 1, 0);
         }
 
         private void handlePostComments(PostWrapper i_PostWrapper)
@@ -502,14 +497,15 @@ namespace BasicFacebookFeatures
 
         private void postButton_Click(object sender, EventArgs e)
         {
-            onPost();
+            addNewPost();
         }
 
-        private void onPost()
+        private void addNewPost()
         {
             try
             {
                 string post = newPostTextBox.Text;
+
                 validatePostLength(post);
                 postItem(post);
             }
@@ -523,8 +519,9 @@ namespace BasicFacebookFeatures
         private void postItem(string i_Post)
         {
             PostWrapper postObject = new PostWrapper(i_Post);
+
             wallListBox.Items.Add(postObject);
-            rm_AllPosts.Add(postObject);
+            r_AllPosts.Add(postObject);
             newPostTextBox.Clear();
 
             if (postToCloseFriendsCheckBox.Checked)
@@ -543,10 +540,10 @@ namespace BasicFacebookFeatures
 
         private void sortWallComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            onSortWall();
+            sortWall();
         }
 
-        private void onSortWall()
+        private void sortWall()
         {
             if (sortWallComboBox.SelectedIndex >= 0)
             {
@@ -554,7 +551,7 @@ namespace BasicFacebookFeatures
 
                 if (comperator != null)
                 {
-                    rm_DisplayedPosts.Sort((x, y) => comperator.Compare(x, y));
+                    r_DisplayedPosts.Sort((x, y) => comperator.Compare(x, y));
                     reDisplayUserPosts();
                 }
             }
@@ -564,7 +561,7 @@ namespace BasicFacebookFeatures
         {
             wallListBox.Items.Clear();
 
-            foreach (PostWrapper postWrapper in rm_DisplayedPosts)
+            foreach (PostWrapper postWrapper in r_DisplayedPosts)
             {
                 wallListBox.Items.Add(postWrapper);
             }
@@ -572,10 +569,10 @@ namespace BasicFacebookFeatures
 
         private void filterWallComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            onFilterWall();
+            filterWall();
         }
 
-        private void onFilterWall()
+        private void filterWall()
         {
             if (filterWallComboBox.SelectedIndex >= 0)
             {
@@ -583,8 +580,8 @@ namespace BasicFacebookFeatures
 
                 if (filterer != null)
                 {
-                    rm_DisplayedPosts.Clear();
-                    rm_DisplayedPosts.AddRange(rm_AllPosts.Where(x => filterer.Filter(x)));
+                    r_DisplayedPosts.Clear();
+                    r_DisplayedPosts.AddRange(r_AllPosts.Where(x => filterer.Filter(x)));
                     reDisplayUserPosts();
                 }
             }
@@ -592,10 +589,10 @@ namespace BasicFacebookFeatures
 
         private void timedPostButton_Click(object sender, EventArgs e)
         {
-            onTimedPost();
+            timePost();
         }
 
-        private void onTimedPost()
+        private void timePost()
         {
             try
             {

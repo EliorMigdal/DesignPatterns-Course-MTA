@@ -1,14 +1,5 @@
 ﻿using FacebookWrapper.ObjectModel;
-using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Windows.Forms;
-using GMap.NET;
-using GMap.NET.WindowsForms;
-using GMap.NET.WindowsForms.Markers;
-using System;
 using BasicFacebookFeatures.CustomeData;
-using System.Collections.Generic;
-using BasicFacebookFeatures.Properties;
 
 namespace BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types
 {

@@ -8,21 +8,28 @@ namespace BasicFacebookFeatures.PanelConversion
     {
         public static IPanelViewable CreatePanelConvertor(IUserItemWrapper i_ItemWrapper)
         {
-            IPanelViewable panelViewable = null;
+            IPanelViewable panelViewable;
 
             switch (i_ItemWrapper)
             {
                 case EventWrapper eventWrapper:
-                    return new EventWrapperConverter(eventWrapper);
+                    panelViewable = new EventWrapperConverter(eventWrapper);
+                    break;
                 case AlbumWrapper albumWrapper:
-                    return new AlbumWrapperConverter(albumWrapper.Album);
+                    panelViewable = new AlbumWrapperConverter(albumWrapper.Album);
+                    break;
                 case LikedPageWrapper pagesWrapper:
-                    return new LikedPageWrapperConverter(pagesWrapper);
-                    case FriendWrapper friendWrapper:
-                    return new FriendWrapperConverter(friendWrapper);
+                    panelViewable = new LikedPageWrapperConverter(pagesWrapper);
+                    break;
+                case FriendWrapper friendWrapper:
+                    panelViewable = new FriendWrapperConverter(friendWrapper);
+                    break;
                 default:
-                    return panelViewable;
+                    panelViewable = null;
+                    break;
             }
+
+            return panelViewable;
         }
     }
 }

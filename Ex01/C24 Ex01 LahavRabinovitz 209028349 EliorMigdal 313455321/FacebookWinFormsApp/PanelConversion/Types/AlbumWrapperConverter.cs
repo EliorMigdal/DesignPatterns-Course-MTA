@@ -22,6 +22,7 @@ namespace BasicFacebookFeatures.PanelConversion.Types
                 return m_Controls;
             }
         }
+
         public Album Album { get; set; }
 
         public AlbumWrapperConverter(Album i_Album)
