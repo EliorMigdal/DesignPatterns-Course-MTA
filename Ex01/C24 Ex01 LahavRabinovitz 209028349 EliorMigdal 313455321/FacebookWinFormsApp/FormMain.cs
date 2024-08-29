@@ -26,11 +26,11 @@ namespace BasicFacebookFeatures
         private readonly UserWrapper rm_UserWrapper = new UserWrapper();
         private readonly List<PostWrapper> rm_DisplayedPosts = new List<PostWrapper>();
         private readonly List<PostWrapper> rm_AllPosts = new List<PostWrapper>();
+        private readonly string rm_AppID = "868047088601231";
 
         public FormMain()
         {
             InitializeComponent();
-            //Clipboard.SetText("868047088601231");
             FacebookService.s_CollectionLimit = 25;
             initializeAppSettings();
             initializeConnectionOnStartup();
@@ -67,29 +67,31 @@ namespace BasicFacebookFeatures
 
         private void login()
         {
-            m_LoginResult = FacebookService.Login(
-                textBoxAppID.Text,
-                    "email",
-                    "public_profile",
-                    "user_age_range",
-                    "user_birthday",
-                    "user_events",
-                    "user_friends",
-                    "user_gender",
-                    "user_hometown",
-                    "user_likes",
-                    "user_link",
-                    "user_location",
-                    "user_photos",
-                    "user_posts",
-                    "user_videos");
+            m_LoginResult = FacebookService.Login
+            (
+                rm_AppID,
+                "email",
+                "public_profile",
+                "user_age_range",
+                "user_birthday",
+                "user_events",
+                "user_friends",
+                "user_gender",
+                "user_hometown",
+                "user_likes",
+                "user_link",
+                "user_location",
+                "user_photos",
+                "user_posts",
+                "user_videos"
+            );
 
             onLogin();
         }
 
         private void onLogin()
         {
-            if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
+            if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage) && m_LoginResult.LoggedInUser != null)
             {
                 buttonLogin.Text = "Logged in!";
                 buttonLogin.BackColor = Color.LightGreen;
@@ -110,7 +112,6 @@ namespace BasicFacebookFeatures
 
         private void initializeWallTab()
         {
-            wallDateTimePicker.Enabled = true;
             wallListBox.Enabled = true;
             postButton.Enabled = true;
             postDataLayoutPanel.Enabled = true;
@@ -292,35 +293,57 @@ namespace BasicFacebookFeatures
 
         private void itemsListBox_Click(object sender, EventArgs e)
         {
+            onItemSelection();
+        }
+
+        private void onItemSelection()
+        {
             if (itemsListBox.SelectedItems.Count == 1)
             {
                 IUserCollectionsWrapper selectedItem = itemsListBox.SelectedItem as IUserCollectionsWrapper;
 
-                clearItemsPanel();
-                elementsListBox.Items.Clear();
-
-                foreach (IUserItemWrapper userItem in selectedItem.ItemWrapperCollection)
+                if (selectedItem != null)
                 {
-                    elementsListBox.Items.Add(userItem);
+                    resetElementsListBox();
+                    clearItemsPanel();
+
+                    foreach (IUserItemWrapper userItem in selectedItem.ItemWrapperCollection)
+                    {
+                        elementsListBox.Items.Add(userItem);
+                    }
                 }
             }
         }
 
+        private void resetElementsListBox()
+        {
+            elementsListBox.Items.Clear();
+            selectedElementPictureBox.ImageLocation = string.Empty;
+        }
+
         private void elementsListBox_Click(object sender, EventArgs e)
+        {
+            onElementSelection();
+        }
+
+        private void onElementSelection()
         {
             if (elementsListBox.SelectedItems.Count == 1)
             {
                 IUserItemWrapper selectedItem = elementsListBox.SelectedItem as IUserItemWrapper;
-                itemsPanel.Controls.Clear();
 
-                selectedElementPictureBox.ImageLocation = selectedItem.Picture;
-                IPanelViewable selectedViewable = PanelConvertersFactory.CreatePanelConvertor(selectedItem);
-
-                if (selectedViewable != null)
+                if (selectedItem != null)
                 {
-                    foreach (Control control in selectedViewable.Controls)
+                    IPanelViewable selectedViewable = PanelConvertersFactory.CreatePanelConvertor(selectedItem);
+                    clearItemsPanel();
+                    selectedElementPictureBox.ImageLocation = selectedItem.Picture;
+
+                    if (selectedViewable != null)
                     {
-                        itemsPanel.Controls.Add(control);
+                        foreach (Control control in selectedViewable.Controls)
+                        {
+                            itemsPanel.Controls.Add(control);
+                        }
                     }
                 }
             }

@@ -1,7 +1,6 @@
 ﻿using BasicFacebookFeatures.CustomeData;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper;
 using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -12,7 +11,7 @@ namespace BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types
     {
         public string Name => "Friends";
 
-        public Collection<IUserItemWrapper> ItemWrapperCollection => new Collection<IUserItemWrapper>();
+        public Collection<IUserItemWrapper> ItemWrapperCollection {  get; set; } = new Collection<IUserItemWrapper>();
 
         public UserFriendsWrapper(List<Friend> i_Friends)
         {

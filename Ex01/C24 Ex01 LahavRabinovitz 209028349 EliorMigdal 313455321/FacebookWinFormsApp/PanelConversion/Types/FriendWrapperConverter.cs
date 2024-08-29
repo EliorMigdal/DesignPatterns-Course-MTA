@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using BasicFacebookFeatures.CustomeData;
 using System.Drawing;
 using BasicFacebookFeatures.Properties;
+using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures.PanelConversion.Types
 {
@@ -84,39 +85,40 @@ namespace BasicFacebookFeatures.PanelConversion.Types
 
         private void initializeRightColumn(ref TableLayoutPanel io_TableLayoutPanel)
         {
-            FlowLayoutPanel pictures = new FlowLayoutPanel
+            FlowLayoutPanel picturesPanel = new FlowLayoutPanel
             {
-                FlowDirection = FlowDirection.TopDown,
+                FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
                 AutoScroll = true,
                 Dock = DockStyle.Fill
             };
 
-            foreach(string picture in m_Friend.Pictures)
+            foreach (string photo in m_Friend.Pictures)
             {
-                PictureBox pictureBox = new PictureBox
+                PictureBox selectedPictureBox = new PictureBox
                 {
-                    Image = Resources.batman,
-                    SizeMode = PictureBoxSizeMode.AutoSize,
-                    Dock = DockStyle.Fill,
-                    Size = new Size(60, 60),
-                    Margin = new Padding(5)
+                    Image = Properties.Resources.summerbeach,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Size = new Size(50, 50),
+                    Margin = new Padding(5),
                 };
 
-                pictures.Controls.Add(pictureBox);
+                picturesPanel.Controls.Add(selectedPictureBox);
             }
 
-            io_TableLayoutPanel.Controls.Add(pictures, 2, 0);
+            io_TableLayoutPanel.Controls.Add(picturesPanel, 2, 0);
         }
 
         private void initializeButton(ref TableLayoutPanel io_TableLayoutPanel)
         {
             Button closeFriendButton = new Button
             {
-                Dock = DockStyle.Fill,
+                AutoSize = true,
                 Text = "Close Friend",
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = Color.ForestGreen,
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Fill
             };
 
             io_TableLayoutPanel.Controls.Add(closeFriendButton, 0, 2);
@@ -126,8 +128,8 @@ namespace BasicFacebookFeatures.PanelConversion.Types
         {
             PictureBox profilePicture = new PictureBox
             {
-                Image = Resources.summerbeach, //ImageLocation = Event.PictureNormalURL,
-                SizeMode = PictureBoxSizeMode.AutoSize,
+                Image = Resources.batman, //ImageLocation = Event.PictureNormalURL,
+                SizeMode = PictureBoxSizeMode.Zoom,
                 Dock = DockStyle.Fill,
                 Size = new Size(60, 60),
                 Margin = new Padding(5)

@@ -154,7 +154,6 @@
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserEventsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserFriendsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserLikedPagesWrapper.cs" />
-    <Compile Include="Logic\UserWrapper\UserItemsWrapper\Types\UserPostsWrapper.cs" />
     <Compile Include="Logic\UserWrapper\UserWrapper.cs" />
     <Compile Include="PanelConversion\IPanelViewable.cs" />
     <Compile Include="PanelConversion\PanelConvertersFactory.cs" />
@@ -184,7 +183,6 @@
       <DependentUpon>TimedPostForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="eventData.json" />
-    <None Include="batman.jpeg" />
     <Content Include="Liked Pages.json" />
     <None Include="friends.json" />
     <None Include="packages.config" />
@@ -202,11 +200,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="delete.png" />
     <Content Include="Resources\tech.png" />
     <Content Include="Resources\summerbeach.png" />
-    <None Include="tech.png" />
-    <None Include="summerbeach.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

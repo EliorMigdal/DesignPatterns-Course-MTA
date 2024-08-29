@@ -18,6 +18,8 @@ namespace BasicFacebookFeatures.PanelConversion
                     return new AlbumWrapperConverter(albumWrapper.Album);
                 case LikedPageWrapper pagesWrapper:
                     return new LikedPageWrapperConverter(pagesWrapper);
+                    case FriendWrapper friendWrapper:
+                    return new FriendWrapperConverter(friendWrapper);
                 default:
                     return panelViewable;
             }

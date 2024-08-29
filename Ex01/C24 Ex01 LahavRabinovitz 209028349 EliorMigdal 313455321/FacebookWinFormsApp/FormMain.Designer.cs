@@ -30,7 +30,6 @@
         {
             this.buttonLogin = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.homeTab = new System.Windows.Forms.TabPage();
             this.welcomeLabel = new System.Windows.Forms.Label();
@@ -42,13 +41,11 @@
             this.rememberMeCheckBox = new System.Windows.Forms.CheckBox();
             this.profilePictureTrackBar = new System.Windows.Forms.TrackBar();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
-            this.textBoxAppID = new System.Windows.Forms.TextBox();
             this.wallTab = new System.Windows.Forms.TabPage();
             this.postInfoLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.postDataLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.commentsListBox = new System.Windows.Forms.ListBox();
             this.timedPostButton = new System.Windows.Forms.Button();
-            this.wallDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.filterWallComboBox = new System.Windows.Forms.ComboBox();
             this.sortWallComboBox = new System.Windows.Forms.ComboBox();
             this.postToCloseFriendsCheckBox = new System.Windows.Forms.CheckBox();
@@ -88,16 +85,6 @@
             this.buttonLogout.UseVisualStyleBackColor = true;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(314, 17);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(241, 18);
-            this.label1.TabIndex = 53;
-            this.label1.Text = "Type here your own AppID to test it:";
-            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.homeTab);
@@ -120,8 +107,6 @@
             this.homeTab.Controls.Add(this.rememberMeCheckBox);
             this.homeTab.Controls.Add(this.profilePictureTrackBar);
             this.homeTab.Controls.Add(this.pictureBoxProfile);
-            this.homeTab.Controls.Add(this.textBoxAppID);
-            this.homeTab.Controls.Add(this.label1);
             this.homeTab.Controls.Add(this.buttonLogout);
             this.homeTab.Controls.Add(this.buttonLogin);
             this.homeTab.Location = new System.Drawing.Point(4, 27);
@@ -195,9 +180,9 @@
             // 
             this.itemsListBox.FormattingEnabled = true;
             this.itemsListBox.ItemHeight = 18;
-            this.itemsListBox.Location = new System.Drawing.Point(317, 68);
+            this.itemsListBox.Location = new System.Drawing.Point(317, 17);
             this.itemsListBox.Name = "itemsListBox";
-            this.itemsListBox.Size = new System.Drawing.Size(238, 130);
+            this.itemsListBox.Size = new System.Drawing.Size(251, 184);
             this.itemsListBox.TabIndex = 58;
             this.itemsListBox.Visible = false;
             this.itemsListBox.Click += new System.EventHandler(this.itemsListBox_Click);
@@ -233,19 +218,10 @@
             this.pictureBoxProfile.TabIndex = 55;
             this.pictureBoxProfile.TabStop = false;
             // 
-            // textBoxAppID
-            // 
-            this.textBoxAppID.Location = new System.Drawing.Point(317, 38);
-            this.textBoxAppID.Name = "textBoxAppID";
-            this.textBoxAppID.Size = new System.Drawing.Size(237, 24);
-            this.textBoxAppID.TabIndex = 54;
-            this.textBoxAppID.Text = "868047088601231";
-            // 
             // wallTab
             // 
             this.wallTab.Controls.Add(this.postInfoLayoutPanel);
             this.wallTab.Controls.Add(this.timedPostButton);
-            this.wallTab.Controls.Add(this.wallDateTimePicker);
             this.wallTab.Controls.Add(this.filterWallComboBox);
             this.wallTab.Controls.Add(this.sortWallComboBox);
             this.wallTab.Controls.Add(this.postToCloseFriendsCheckBox);
@@ -315,14 +291,6 @@
             this.timedPostButton.Text = "Timed Post";
             this.timedPostButton.UseVisualStyleBackColor = false;
             this.timedPostButton.Click += new System.EventHandler(this.timedPostButton_Click);
-            // 
-            // wallDateTimePicker
-            // 
-            this.wallDateTimePicker.Enabled = false;
-            this.wallDateTimePicker.Location = new System.Drawing.Point(130, 8);
-            this.wallDateTimePicker.Name = "wallDateTimePicker";
-            this.wallDateTimePicker.Size = new System.Drawing.Size(185, 24);
-            this.wallDateTimePicker.TabIndex = 6;
             // 
             // filterWallComboBox
             // 
@@ -402,7 +370,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Mini-Facebook";
             this.tabControl1.ResumeLayout(false);
             this.homeTab.ResumeLayout(false);
             this.homeTab.PerformLayout();
@@ -421,11 +389,9 @@
 
 		private System.Windows.Forms.Button buttonLogin;
 		private System.Windows.Forms.Button buttonLogout;
-		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage homeTab;
 		private System.Windows.Forms.TabPage wallTab;
-        private System.Windows.Forms.TextBox textBoxAppID;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.TrackBar profilePictureTrackBar;
         private System.Windows.Forms.CheckBox rememberMeCheckBox;
@@ -440,7 +406,6 @@
         private System.Windows.Forms.Button postButton;
         private System.Windows.Forms.CheckBox postToCloseFriendsCheckBox;
         private System.Windows.Forms.ComboBox sortWallComboBox;
-        private System.Windows.Forms.DateTimePicker wallDateTimePicker;
         private System.Windows.Forms.ComboBox filterWallComboBox;
         private System.Windows.Forms.Button timedPostButton;
         private System.Windows.Forms.TableLayoutPanel postInfoLayoutPanel;
