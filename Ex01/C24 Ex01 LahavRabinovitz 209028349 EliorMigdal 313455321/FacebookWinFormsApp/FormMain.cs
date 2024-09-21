@@ -4,17 +4,18 @@ using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
 using BasicFacebookFeatures.Logic.Settings;
-using BasicFacebookFeatures.Logic.UserWrapper;
-using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper;
-using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper;
-using BasicFacebookFeatures.PanelConversion;
-using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types;
+using BasicFacebookFeatures.Logic.UserProxy;
+using BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter;
+using BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types.ItemAdapter;
+using BasicFacebookFeatures.PanelDecorator;
+using BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types.ItemAdapter.Types;
 using System.Collections.Generic;
 using System.Linq;
 using BasicFacebookFeatures.Logic.Comperator.Types;
 using BasicFacebookFeatures.Logic.Comperator;
 using BasicFacebookFeatures.Logic.Filterer.Types;
 using BasicFacebookFeatures.Logic.Filterer;
+using System.Threading;
 
 namespace BasicFacebookFeatures
 {
@@ -23,9 +24,9 @@ namespace BasicFacebookFeatures
         private LoginResult m_LoginResult;
         private Album m_ProfilePictures;
         private AppSettings m_AppSettings;
-        private readonly UserWrapper r_UserWrapper = new UserWrapper();
-        private readonly List<PostWrapper> r_DisplayedPosts = new List<PostWrapper>();
-        private readonly List<PostWrapper> r_AllPosts = new List<PostWrapper>();
+        private readonly UserProxy r_UserProxy = new UserProxy();
+        private readonly List<PostAdapter> r_DisplayedPosts = new List<PostAdapter>();
+        private readonly List<PostAdapter> r_AllPosts = new List<PostAdapter>();
         private readonly string r_AppID = "868047088601231";
 
         public FormMain()
@@ -67,26 +68,29 @@ namespace BasicFacebookFeatures
 
         private void login()
         {
-            m_LoginResult = FacebookService.Login
-            (
-                r_AppID,
-                "email",
-                "public_profile",
-                "user_age_range",
-                "user_birthday",
-                "user_events",
-                "user_friends",
-                "user_gender",
-                "user_hometown",
-                "user_likes",
-                "user_link",
-                "user_location",
-                "user_photos",
-                "user_posts",
-                "user_videos"
-            );
+            new Thread(() =>
+            {
+                m_LoginResult = FacebookService.Login
+                (
+                    r_AppID,
+                    "email",
+                    "public_profile",
+                    "user_age_range",
+                    "user_birthday",
+                    "user_events",
+                    "user_friends",
+                    "user_gender",
+                    "user_hometown",
+                    "user_likes",
+                    "user_link",
+                    "user_location",
+                    "user_photos",
+                    "user_posts",
+                    "user_videos"
+                );
 
-            initializeUponLogin();
+                Invoke(new MethodInvoker(delegate { initializeUponLogin(); }));
+            }).Start();
         }
 
         private void initializeUponLogin()
@@ -97,13 +101,14 @@ namespace BasicFacebookFeatures
                 pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
                 rememberMeCheckBox.Visible = true;
                 setProfilePictureButton.Visible = true;
-                handleLoginButton();
-                initializeUserWrapper();
+                handleLoginButton(); 
+                initializeListBoxes();
+                initializeUserAdapter();
                 initializeWallTab();
                 initializeWelcomeLabel();
                 initializeAlbums();
                 initializeTrackBar();
-                initializeListBoxes();
+
             }
         }
 
@@ -135,11 +140,11 @@ namespace BasicFacebookFeatures
             wallListBox.DisplayMember = "Message";
             commentsListBox.DisplayMember = "Message";
 
-            foreach (Post post in r_UserWrapper.UserData.Posts)
+            foreach (Post post in r_UserProxy.UserData.Posts)
             {
                 if (!string.IsNullOrEmpty(post.Message))
                 {
-                    PostWrapper postWrapper = new PostWrapper(post);
+                    PostAdapter postWrapper = new PostAdapter(post);
                     r_AllPosts.Add(postWrapper);
                     wallListBox.Items.Add(postWrapper);
                 }
@@ -280,8 +285,11 @@ namespace BasicFacebookFeatures
         {
             itemsListBox.DisplayMember = "Name";
             itemsListBox.Visible = true;
-            
-            foreach (IUserCollectionsWrapper userItem in r_UserWrapper.UserItems)
+        }
+
+        private void fetchItemsListBoxData()
+        {
+            foreach (IUserCollectionsAdapter userItem in r_UserProxy.UserItems)
             {
                 itemsListBox.Items.Add(userItem);
             }
@@ -303,14 +311,14 @@ namespace BasicFacebookFeatures
         {
             if (itemsListBox.SelectedItems.Count == 1)
             {
-                IUserCollectionsWrapper selectedItem = itemsListBox.SelectedItem as IUserCollectionsWrapper;
+                IUserCollectionsAdapter selectedItem = itemsListBox.SelectedItem as IUserCollectionsAdapter;
 
                 if (selectedItem != null)
                 {
                     resetElementsListBox();
                     clearItemsPanel();
 
-                    foreach (IUserItemWrapper userItem in selectedItem.ItemWrapperCollection)
+                    foreach (IUserItemAdapter userItem in selectedItem.ItemAdapterCollection)
                     {
                         elementsListBox.Items.Add(userItem);
                     }
@@ -333,11 +341,11 @@ namespace BasicFacebookFeatures
         {
             if (elementsListBox.SelectedItems.Count == 1)
             {
-                IUserItemWrapper selectedItem = elementsListBox.SelectedItem as IUserItemWrapper;
+                IUserItemAdapter selectedItem = elementsListBox.SelectedItem as IUserItemAdapter;
 
                 if (selectedItem != null)
                 {
-                    IPanelViewable selectedViewable = PanelConvertersFactory.CreatePanelConvertor(selectedItem);
+                    IPanelDecorator selectedViewable = PanelDecoratorFactory.CreatePanelConvertor(selectedItem);
                     clearItemsPanel();
                     selectedElementPictureBox.ImageLocation = selectedItem.Picture;
 
@@ -352,12 +360,32 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void initializeUserWrapper()
+        private void initializeUserAdapter()
         {
             try
             {
-                r_UserWrapper.UserData = m_LoginResult.LoggedInUser;
-                r_UserWrapper.ProfilePicture = pictureBoxProfile.ImageLocation;
+                new Thread(() => 
+                {
+                    r_UserProxy.UserData = m_LoginResult.LoggedInUser;
+                    Thread albumsThread = new Thread(() => r_UserProxy.InitializeUserAlbums());
+                    Thread friendsThread = new Thread(() => r_UserProxy.InitializeUserFriends());
+                    Thread eventsThread = new Thread(() => r_UserProxy.InitializeUserEvents());
+                    Thread likedPagesThread = new Thread(() => r_UserProxy.InitializeUserLikedPages());
+                    albumsThread.Start();
+                    friendsThread.Start();
+                    eventsThread.Start();
+                    likedPagesThread.Start();
+
+                    albumsThread.Join();
+                    friendsThread.Join();
+                    eventsThread.Join();
+                    likedPagesThread.Join();
+
+                    Invoke(new MethodInvoker(delegate {
+                        fetchItemsListBoxData();
+                    }));
+                }).Start();
+                r_UserProxy.ProfilePicture = pictureBoxProfile.ImageLocation;
             }
 
             catch (Exception ex)
@@ -384,13 +412,13 @@ namespace BasicFacebookFeatures
 
         private void setProfilePicture()
         {
-            r_UserWrapper.ProfilePicture = pictureBoxProfile.ImageLocation;
+            r_UserProxy.ProfilePicture = pictureBoxProfile.ImageLocation;
             handleSetProfilePictureState();
         }
 
         private void handleSetProfilePictureState()
         {
-            if (r_UserWrapper.ProfilePicture.Equals(pictureBoxProfile.ImageLocation))
+            if (r_UserProxy.ProfilePicture.Equals(pictureBoxProfile.ImageLocation))
             {
                 setProfilePictureButton.Enabled = false;
             }
@@ -420,7 +448,7 @@ namespace BasicFacebookFeatures
         {
             if (wallListBox.SelectedItems.Count == 1)
             {
-                PostWrapper selectedPost = wallListBox.SelectedItem as PostWrapper;
+                PostAdapter selectedPost = wallListBox.SelectedItem as PostAdapter;
 
                 clearPostInfoLayout();
                 commentsListBox.Items.Clear();
@@ -430,7 +458,7 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void handlePostContent(PostWrapper i_PostWrapper)
+        private void handlePostContent(PostAdapter i_PostWrapper)
         {
             Label postContents = new Label
             {
@@ -442,7 +470,7 @@ namespace BasicFacebookFeatures
             postInfoLayoutPanel.Controls.Add(postContents, 0, 0);
         }
 
-        private void handlePostComments(PostWrapper i_PostWrapper)
+        private void handlePostComments(PostAdapter i_PostWrapper)
         {
             foreach (string comment in i_PostWrapper.Comments)
             {
@@ -450,7 +478,7 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void handlePostInfo(PostWrapper i_PostWrapper)
+        private void handlePostInfo(PostAdapter i_PostWrapper)
         {
             Label label = new Label
             {
@@ -518,7 +546,7 @@ namespace BasicFacebookFeatures
 
         private void postItem(string i_Post)
         {
-            PostWrapper postObject = new PostWrapper(i_Post);
+            PostAdapter postObject = new PostAdapter(i_Post);
 
             wallListBox.Items.Add(postObject);
             r_AllPosts.Add(postObject);
@@ -526,7 +554,7 @@ namespace BasicFacebookFeatures
 
             if (postToCloseFriendsCheckBox.Checked)
             {
-                postObject.PostType = PostWrapper.ePostType.CloseFriends;
+                postObject.PostType = PostAdapter.ePostType.CloseFriends;
             }
         }
 
@@ -547,7 +575,7 @@ namespace BasicFacebookFeatures
         {
             if (sortWallComboBox.SelectedIndex >= 0)
             {
-                IComperator<PostWrapper> comperator = sortWallComboBox.SelectedItem as IComperator<PostWrapper>;
+                IComperator<PostAdapter> comperator = sortWallComboBox.SelectedItem as IComperator<PostAdapter>;
 
                 if (comperator != null)
                 {
@@ -561,7 +589,7 @@ namespace BasicFacebookFeatures
         {
             wallListBox.Items.Clear();
 
-            foreach (PostWrapper postWrapper in r_DisplayedPosts)
+            foreach (PostAdapter postWrapper in r_DisplayedPosts)
             {
                 wallListBox.Items.Add(postWrapper);
             }
@@ -576,7 +604,7 @@ namespace BasicFacebookFeatures
         {
             if (filterWallComboBox.SelectedIndex >= 0)
             {
-                IFilterer<PostWrapper> filterer = filterWallComboBox.SelectedItem as IFilterer<PostWrapper>;
+                IFilterer<PostAdapter> filterer = filterWallComboBox.SelectedItem as IFilterer<PostAdapter>;
 
                 if (filterer != null)
                 {
@@ -608,7 +636,7 @@ namespace BasicFacebookFeatures
                         if (selectedDateTime > DateTime.Now)
                         {
                             TimeSpan timeUntilPost = selectedDateTime - DateTime.Now;
-                            Timer timer = new Timer
+                            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer
                             {
                                 Interval = (int)timeUntilPost.TotalMilliseconds
                             };

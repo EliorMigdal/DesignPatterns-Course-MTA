@@ -1,8 +1,8 @@
 ﻿using BasicFacebookFeatures.CustomeData;
 
-namespace BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types
+namespace BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types.ItemAdapter.Types
 {
-    public class FriendWrapper : IUserItemWrapper
+    public class FriendAdapter : IUserItemAdapter
     {
         public string Name { get; set; }
 
@@ -10,7 +10,7 @@ namespace BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWra
         
         public Friend Friend { get; set; }
 
-        public FriendWrapper(Friend i_Friend)
+        public FriendAdapter(Friend i_Friend)
         {
             Friend = i_Friend;
             Name = i_Friend.Name;

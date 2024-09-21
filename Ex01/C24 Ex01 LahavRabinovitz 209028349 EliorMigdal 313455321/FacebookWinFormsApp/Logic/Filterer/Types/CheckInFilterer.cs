@@ -1,14 +1,14 @@
-﻿using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types;
+﻿using BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types.ItemAdapter.Types;
 
 namespace BasicFacebookFeatures.Logic.Filterer.Types
 {
-    public class CheckInFilterer : IFilterer<PostWrapper>
+    public class CheckInFilterer : IFilterer<PostAdapter>
     {
         public string Name => "Check In";
 
-        public bool Filter(PostWrapper i_Obj)
+        public bool Filter(PostAdapter i_Obj)
         {
-            return i_Obj.PostType.Equals(PostWrapper.ePostType.CheckIn);
+            return i_Obj.PostType.Equals(PostAdapter.ePostType.CheckIn);
         }
     }
 }

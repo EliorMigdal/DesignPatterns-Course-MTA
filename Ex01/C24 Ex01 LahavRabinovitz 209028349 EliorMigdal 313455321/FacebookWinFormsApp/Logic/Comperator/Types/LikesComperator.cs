@@ -1,12 +1,12 @@
-﻿using BasicFacebookFeatures.Logic.UserWrapper.UserItemsWrapper.Types.ItemWrapper.Types;
+﻿using BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types.ItemAdapter.Types;
 
 namespace BasicFacebookFeatures.Logic.Comperator.Types
 {
-    public class LikesComperator : IComperator<PostWrapper>
+    public class LikesComperator : IComperator<PostAdapter>
     {
         public string Name => "Likes";
 
-        public int Compare(PostWrapper i_ObjA, PostWrapper i_ObjB)
+        public int Compare(PostAdapter i_ObjA, PostAdapter i_ObjB)
         {
             return i_ObjA.Likes.CompareTo(i_ObjB.Likes) *(-1);
         }
