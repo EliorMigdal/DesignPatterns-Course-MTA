@@ -28,6 +28,7 @@ namespace BasicFacebookFeatures
         private readonly List<PostAdapter> r_DisplayedPosts = new List<PostAdapter>();
         private readonly List<PostAdapter> r_AllPosts = new List<PostAdapter>();
         private readonly string r_AppID = "868047088601231";
+        public IUserCollectionsAdapter CollectionListBoxSelectedItem { get; set; }
 
         public FormMain()
         {
@@ -108,7 +109,6 @@ namespace BasicFacebookFeatures
                 initializeWelcomeLabel();
                 initializeAlbums();
                 initializeTrackBar();
-
             }
         }
 
@@ -139,18 +139,20 @@ namespace BasicFacebookFeatures
         {
             wallListBox.DisplayMember = "Message";
             commentsListBox.DisplayMember = "Message";
-
-            foreach (Post post in r_UserProxy.UserData.Posts)
+            new Thread(() =>
             {
-                if (!string.IsNullOrEmpty(post.Message))
+                foreach (Post post in r_UserProxy.UserData.Posts)
                 {
-                    PostAdapter postWrapper = new PostAdapter(post);
-                    r_AllPosts.Add(postWrapper);
-                    wallListBox.Items.Add(postWrapper);
+                    if (!string.IsNullOrEmpty(post.Message))
+                    {
+                        PostAdapter postAdapter = new PostAdapter(post);
+                        r_AllPosts.Add(postAdapter);
+                        Invoke(new MethodInvoker(() => wallListBox.Items.Add(postAdapter)));
+                    }
                 }
-            }
 
-            r_DisplayedPosts.AddRange(r_AllPosts);
+                r_DisplayedPosts.AddRange(r_AllPosts);
+            }).Start();
         }
 
         private void initializeSortComboBox()
@@ -283,8 +285,10 @@ namespace BasicFacebookFeatures
 
         private void initializeItemsListBox()
         {
-            itemsListBox.DisplayMember = "Name";
+            itemsListBox.DataBindings.Add(new Binding("SelectedItem", this,
+                "CollectionListBoxSelectedItem", false, DataSourceUpdateMode.OnPropertyChanged));
             itemsListBox.Visible = true;
+            itemsListBox.DisplayMember = "Name";
         }
 
         private void fetchItemsListBoxData()
@@ -318,10 +322,13 @@ namespace BasicFacebookFeatures
                     resetElementsListBox();
                     clearItemsPanel();
 
-                    foreach (IUserItemAdapter userItem in selectedItem.ItemAdapterCollection)
+                    new Thread(() =>
                     {
-                        elementsListBox.Items.Add(userItem);
-                    }
+                        foreach (IUserItemAdapter userItem in selectedItem.ItemAdapterCollection)
+                        {
+                            Invoke(new MethodInvoker(() => elementsListBox.Items.Add(userItem)));
+                        }
+                    }).Start();
                 }
             }
         }
@@ -343,20 +350,23 @@ namespace BasicFacebookFeatures
             {
                 IUserItemAdapter selectedItem = elementsListBox.SelectedItem as IUserItemAdapter;
 
-                if (selectedItem != null)
+                new Thread(() =>
                 {
-                    IPanelDecorator selectedViewable = PanelDecoratorFactory.CreatePanelConvertor(selectedItem);
-                    clearItemsPanel();
-                    selectedElementPictureBox.ImageLocation = selectedItem.Picture;
-
-                    if (selectedViewable != null)
+                    if (selectedItem != null)
                     {
-                        foreach (Control control in selectedViewable.Controls)
+                        IPanelDecorator selectedViewable = PanelDecoratorFactory.CreatePanelConvertor(selectedItem);
+                        Invoke(new MethodInvoker(() => clearItemsPanel()));
+                        selectedElementPictureBox.ImageLocation = selectedItem.Picture;
+
+                        if (selectedViewable != null)
                         {
-                            itemsPanel.Controls.Add(control);
+                            foreach (Control control in selectedViewable.Controls)
+                            {
+                                Invoke(new MethodInvoker(() => itemsPanel.Controls.Add(control)));
+                            }
                         }
                     }
-                }
+                }).Start();
             }
         }
 
@@ -364,27 +374,8 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                new Thread(() => 
-                {
-                    r_UserProxy.UserData = m_LoginResult.LoggedInUser;
-                    Thread albumsThread = new Thread(() => r_UserProxy.InitializeUserAlbums());
-                    Thread friendsThread = new Thread(() => r_UserProxy.InitializeUserFriends());
-                    Thread eventsThread = new Thread(() => r_UserProxy.InitializeUserEvents());
-                    Thread likedPagesThread = new Thread(() => r_UserProxy.InitializeUserLikedPages());
-                    albumsThread.Start();
-                    friendsThread.Start();
-                    eventsThread.Start();
-                    likedPagesThread.Start();
-
-                    albumsThread.Join();
-                    friendsThread.Join();
-                    eventsThread.Join();
-                    likedPagesThread.Join();
-
-                    Invoke(new MethodInvoker(delegate {
-                        fetchItemsListBoxData();
-                    }));
-                }).Start();
+                r_UserProxy.UserData = m_LoginResult.LoggedInUser;
+                fetchItemsListBoxData();
                 r_UserProxy.ProfilePicture = pictureBoxProfile.ImageLocation;
             }
 
