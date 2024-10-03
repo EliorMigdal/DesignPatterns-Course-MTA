@@ -1,15 +1,18 @@
 ﻿using BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types.ItemAdapter.Types;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using BasicFacebookFeatures.CustomeData;
 using System.Drawing;
 using BasicFacebookFeatures.Properties;
+using BasicFacebookFeatures.TableDecorator.Decorators;
+using BasicFacebookFeatures.TableDecorator;
 
 namespace BasicFacebookFeatures.PanelDecorator.Types
 {
     public class FriendDecorator : IPanelDecorator
     {
-        private Friend m_Friend;
+        private readonly Friend r_Friend;
         private Collection<Control> m_Controls;
         public Collection<Control> Controls
         {
@@ -26,148 +29,84 @@ namespace BasicFacebookFeatures.PanelDecorator.Types
             }
         }
 
-        public FriendDecorator(FriendAdapter i_Friend)
+        public FriendDecorator(FriendAdapter i_FriendAdapter)
         {
-            m_Friend = i_Friend.Friend;
+            r_Friend = i_FriendAdapter.Friend;
         }
 
         private void initializeControls()
         {
-            TableLayoutPanel tableLayoutPanel = initializeGrid();
+            IGrid outerGrid = new RatioGrid(new CoreGrid(1, 3), null, new List<(int, float)>
+            {
+                (1, 25F), (2, 50F), (3, 25F)
+            });
 
-            initializeLeftColumn(ref tableLayoutPanel);
-            initializeCenterColumn(ref tableLayoutPanel);
-            initializeRightColumn(ref tableLayoutPanel);
+            initializeFriendInformationColumn(outerGrid);
+            initializeFriendWallColumn(outerGrid);
+            initializeFriendPicturesColumn(outerGrid);
 
-            m_Controls.Add(tableLayoutPanel);
+            m_Controls.Add(outerGrid.Grid);
         }
 
-        private void initializeLeftColumn(ref TableLayoutPanel io_TableLayoutPanel)
+        private void initializeFriendInformationColumn(IGrid i_OuterGrid)
         {
-            TableLayoutPanel innerTableLayoutPanel = new TableLayoutPanel
-            {
-                RowCount = 3,
-                ColumnCount = 1,
-                Dock = DockStyle.Fill,
-                RowStyles =
-                {
-                    new RowStyle(SizeType.Percent, 25f),
-                    new RowStyle(SizeType.Percent, 50F),
-                    new RowStyle(SizeType.Percent, 25f),
-                },
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink
-            };
-
-            initializeName(ref innerTableLayoutPanel);
-            initializeProfilePicture(ref innerTableLayoutPanel);
-            initializeButton(ref innerTableLayoutPanel);
-
-            io_TableLayoutPanel.Controls.Add(innerTableLayoutPanel, 0, 0);
+            i_OuterGrid.Grid.Controls.Add
+            (
+                new ButtonGrid
+                (
+                    new PicturesGrid
+                    (
+                        new LabelsGrid
+                        (
+                            new RatioGrid
+                            (
+                                new CoreGrid(3, 1),
+                                new List<(int, float)>
+                                {
+                                    (1, 25F), (2, 50F), (3, 25F)
+                                }
+                            ),
+                            new Collection<string>
+                            {
+                                $"Name: {r_Friend.Name}"
+                            }
+                        ),
+                        new List<(Image i_Source, int i_Height, int i_Width)>
+                        {
+                            (Resources.batman, 60, 60)
+                        }
+                    ),
+                    "Close Friend"
+                ).Grid
+            );
         }
 
-        private void initializeCenterColumn(ref TableLayoutPanel io_TableLayoutPanel)
+        private void initializeFriendWallColumn(IGrid i_OuterGrid)
         {
-            ListBox posts = new ListBox
-            {
-                Dock = DockStyle.Fill,
-                SelectionMode = SelectionMode.None,
-            };
-
-            foreach(string post in m_Friend.Posts)
-            {
-                posts.Items.Add(post);
-            }
-
-            io_TableLayoutPanel.Controls.Add(posts, 1, 0);
+            i_OuterGrid.Grid.Controls.Add
+            (
+                new ListBoxGrid
+                (
+                    new CoreGrid(),
+                    r_Friend.Posts
+                ).Grid
+            );
         }
 
-        private void initializeRightColumn(ref TableLayoutPanel io_TableLayoutPanel)
+        private void initializeFriendPicturesColumn(IGrid i_OuterGrid)
         {
-            FlowLayoutPanel picturesPanel = new FlowLayoutPanel
-            {
-                FlowDirection = FlowDirection.LeftToRight,
-                WrapContents = false,
-                AutoScroll = true,
-                Dock = DockStyle.Fill
-            };
-
-            foreach (string photo in m_Friend.Pictures)
-            {
-                PictureBox selectedPictureBox = new PictureBox
-                {
-                    Image = Properties.Resources.summerbeach,
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                    Size = new Size(50, 50),
-                    Margin = new Padding(5),
-                };
-
-                picturesPanel.Controls.Add(selectedPictureBox);
-            }
-
-            io_TableLayoutPanel.Controls.Add(picturesPanel, 2, 0);
-        }
-
-        private void initializeButton(ref TableLayoutPanel io_TableLayoutPanel)
-        {
-            Button closeFriendButton = new Button
-            {
-                AutoSize = true,
-                Text = "Close Friend",
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.ForestGreen,
-                ImageAlign = ContentAlignment.MiddleCenter,
-                Dock = DockStyle.Fill
-            };
-
-            io_TableLayoutPanel.Controls.Add(closeFriendButton, 0, 2);
-        }
-
-        private void initializeProfilePicture(ref TableLayoutPanel io_TableLayoutPanel)
-        {
-            PictureBox profilePicture = new PictureBox
-            {
-                Image = Resources.batman,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                Dock = DockStyle.Fill,
-                Size = new Size(60, 60),
-                Margin = new Padding(5)
-            };
-
-            io_TableLayoutPanel.Controls.Add(profilePicture, 0, 1);
-        }
-
-        private void initializeName(ref TableLayoutPanel io_InnerTableLayoutPanel)
-        {
-            Label name = new Label
-            {
-                Dock = DockStyle.Fill,
-                Text = $"Name: {m_Friend.Name}",
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = true
-            };
-
-            io_InnerTableLayoutPanel.Controls.Add(name, 0, 0);
-        }
-
-        private TableLayoutPanel initializeGrid()
-        {
-            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                ColumnCount = 3,
-                RowCount = 1,
-                ColumnStyles =
-                {
-                    new ColumnStyle(SizeType.Percent, 25F),
-                    new ColumnStyle(SizeType.Percent, 50F),
-                    new ColumnStyle(SizeType.Percent, 25F),
-                },
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink
-            };
-
-            return tableLayoutPanel;
+            i_OuterGrid.Grid.Controls.Add
+            (
+                new PicturesGrid
+                (
+                    new CoreGrid(),
+                    new List<(Image i_Source, int i_Height, int i_Width)>
+                    {
+                        (Resources.summerbeach, 60, 60),
+                        (Resources.batman, 60, 60)
+                    }
+                ).Grid
+            );
         }
     }
 }

@@ -21,14 +21,16 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
+        public IUserCollectionsAdapter CollectionListBoxSelectedItem { get; set; }
+
         private LoginResult m_LoginResult;
         private Album m_ProfilePictures;
         private AppSettings m_AppSettings;
+
         private readonly UserProxy r_UserProxy = new UserProxy();
         private readonly List<PostAdapter> r_DisplayedPosts = new List<PostAdapter>();
         private readonly List<PostAdapter> r_AllPosts = new List<PostAdapter>();
         private readonly string r_AppID = "868047088601231";
-        public IUserCollectionsAdapter CollectionListBoxSelectedItem { get; set; }
 
         public FormMain()
         {
@@ -71,52 +73,48 @@ namespace BasicFacebookFeatures
         {
             new Thread(() =>
             {
-                m_LoginResult = FacebookService.Login
-                (
-                    r_AppID,
-                    "email",
-                    "public_profile",
-                    "user_age_range",
-                    "user_birthday",
-                    "user_events",
-                    "user_friends",
-                    "user_gender",
-                    "user_hometown",
-                    "user_likes",
-                    "user_link",
-                    "user_location",
-                    "user_photos",
-                    "user_posts",
-                    "user_videos"
-                );
+                m_LoginResult = FacebookService.Login(r_AppID, "email", "public_profile",
+                    "user_age_range", "user_birthday", "user_events", "user_friends", "user_gender",
+                    "user_hometown", "user_likes", "user_link", "user_location", "user_photos",
+                    "user_posts", "user_videos");
 
-                Invoke(new MethodInvoker(delegate { initializeUponLogin(); }));
+                Invoke(new MethodInvoker(() => initializeUponLogin()));
             }).Start();
         }
 
         private void initializeUponLogin()
         {
-            if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage) && m_LoginResult.LoggedInUser != null)
+            if (hasSuccessfullyLoggedIn())
             {
                 buttonLogout.Enabled = true;
                 pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
-                rememberMeCheckBox.Visible = true;
                 setProfilePictureButton.Visible = true;
-                handleLoginButton(); 
-                initializeListBoxes();
+                initializeRememberMeCheckBox();
+                initializeLoginButton();
                 initializeUserAdapter();
+                initializeListBoxes();
                 initializeWallTab();
                 initializeWelcomeLabel();
-                initializeAlbums();
                 initializeTrackBar();
             }
         }
 
-        private void handleLoginButton()
+        private bool hasSuccessfullyLoggedIn()
+        {
+            return string.IsNullOrEmpty(m_LoginResult.ErrorMessage) && m_LoginResult.LoggedInUser != null;
+        }
+
+        private void initializeLoginButton()
         {
             buttonLogin.Text = "Logged in!";
             buttonLogin.BackColor = Color.LightGreen;
             buttonLogin.Enabled = false;
+        }
+
+        private void initializeRememberMeCheckBox()
+        {
+            rememberMeCheckBox.Visible = true;
+            rememberMeCheckBox.Checked = m_AppSettings.RememberUser;
         }
 
         private void initializeWallTab()
@@ -166,7 +164,7 @@ namespace BasicFacebookFeatures
         private void initializeFilterComboBox()
         {
             filterWallComboBox.Enabled = true;
-            filterWallComboBox.DisplayMember= "Name";
+            filterWallComboBox.DisplayMember = "Name";
             filterWallComboBox.Items.Add(new DefaultFilterer());
             filterWallComboBox.Items.Add(new CheckInFilterer());
             filterWallComboBox.Items.Add(new TextOnlyFilterer());
@@ -198,16 +196,18 @@ namespace BasicFacebookFeatures
             buttonLogin.Enabled = true;
         }
 
-        private void initializeAlbums()
-        {
-            m_ProfilePictures = m_LoginResult.LoggedInUser.Albums.Find(album => album.Name.Equals("Profile pictures"));
-        }
-
         private void initializeTrackBar()
         {
-            profilePictureTrackBar.Minimum = 0;
-            profilePictureTrackBar.Maximum = Math.Min(5, (int) m_ProfilePictures?.Count);
-            profilePictureTrackBar.Visible = true;
+            new Thread(() =>
+            {
+                m_ProfilePictures = m_LoginResult.LoggedInUser.Albums.Find(album => album.Name.Equals("Profile pictures"));
+                Invoke(new MethodInvoker(() =>
+                {
+                    profilePictureTrackBar.Minimum = 0;
+                    profilePictureTrackBar.Maximum = Math.Min(5, (int)m_ProfilePictures?.Count);
+                    profilePictureTrackBar.Visible = true;
+                }));
+            }).Start();
         }
 
         private void profilePictureTrackBar_ValueChanged(object sender, EventArgs e)
@@ -228,15 +228,7 @@ namespace BasicFacebookFeatures
 
         private void handleAppSettingsFlag()
         {
-            if (rememberMeCheckBox.Checked)
-            {
-                m_AppSettings.RememberUser = true;
-            }
-
-            else
-            {
-                m_AppSettings.RememberUser = false;
-            }
+            m_AppSettings.RememberUser = rememberMeCheckBox.Checked;
         }
 
         private void handleUserToken()
@@ -272,8 +264,7 @@ namespace BasicFacebookFeatures
             {
                 m_LoginResult = FacebookService.Connect(m_AppSettings.Token);
                 initializeUponLogin();
-                rememberMeCheckBox.Visible = true;
-                rememberMeCheckBox.Checked = true;
+                initializeRememberMeCheckBox();
             }
         }
         
@@ -285,10 +276,11 @@ namespace BasicFacebookFeatures
 
         private void initializeItemsListBox()
         {
-            itemsListBox.DataBindings.Add(new Binding("SelectedItem", this,
-                "CollectionListBoxSelectedItem", false, DataSourceUpdateMode.OnPropertyChanged));
-            itemsListBox.Visible = true;
+            itemsListBox.DataSource = r_UserProxy.UserItems;
             itemsListBox.DisplayMember = "Name";
+            itemsListBox.DataBindings.Add(new Binding("SelectedItem", this,
+                "CollectionListBoxSelectedItem", true, DataSourceUpdateMode.OnPropertyChanged));
+            itemsListBox.Visible = true;
         }
 
         private void fetchItemsListBoxData()
@@ -375,7 +367,6 @@ namespace BasicFacebookFeatures
             try
             {
                 r_UserProxy.UserData = m_LoginResult.LoggedInUser;
-                fetchItemsListBoxData();
                 r_UserProxy.ProfilePicture = pictureBoxProfile.ImageLocation;
             }
 
@@ -523,10 +514,8 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                string post = newPostTextBox.Text;
-
-                validatePostLength(post);
-                postItem(post);
+                validatePostLength(newPostTextBox.Text);
+                postItem(newPostTextBox.Text);
             }
 
             catch (Exception ex)

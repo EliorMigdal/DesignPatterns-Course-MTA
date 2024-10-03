@@ -5,6 +5,7 @@ using FacebookWrapper.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types
 {
@@ -13,6 +14,13 @@ namespace BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types
         public string Name => "Friends";
         private readonly User r_UserData;
         private readonly Collection<IUserItemAdapter> r_FriendsCollection = new Collection<IUserItemAdapter>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string i_PropertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(i_PropertyName));
+        }
 
         public Collection<IUserItemAdapter> ItemAdapterCollection 
         {  
@@ -43,6 +51,7 @@ namespace BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types
                     r_FriendsCollection.Add(new FriendAdapter(friend));
                 }
             }
+
             catch (Exception)
             {
 

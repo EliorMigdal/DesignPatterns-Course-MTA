@@ -1,5 +1,4 @@
 ﻿using BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types.ItemAdapter.Types;
-using System;
 
 namespace BasicFacebookFeatures.Logic.Filterer.Types
 {

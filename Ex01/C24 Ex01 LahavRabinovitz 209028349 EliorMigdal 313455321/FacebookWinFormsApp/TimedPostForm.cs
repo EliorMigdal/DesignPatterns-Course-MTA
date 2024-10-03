@@ -6,18 +6,21 @@ namespace BasicFacebookFeatures
 {
     public partial class TimedPostForm : Form
     {
-        private DateTimePicker m_DateTimePicker;
-        private Button m_ButtonOk;
-        private Button m_ButtonCancel;
+        // $G$ CSS-002 (-3) Bad member variable name (should be m_CamelCased)
+        private DateTimePicker dateTimePicker;
+        // $G$ CSS-002 (-3) Bad member variable name (should be m_CamelCased)
+        private Button buttonOK;
+        // $G$ CSS-002 (-3) Bad member variable name (should be m_CamelCased)
+        private Button buttonCancel;
 
         public DateTime SelectedDateTime { get; private set; }
 
         public TimedPostForm()
         {
             InitializeComponent();
-            m_DateTimePicker.Format = DateTimePickerFormat.Custom;
-            m_DateTimePicker.CustomFormat = "MM/dd/yyyy hh:mm tt";
-            m_DateTimePicker.MinDate = DateTime.Now;
+            dateTimePicker.Format = DateTimePickerFormat.Custom;
+            dateTimePicker.CustomFormat = "MM/dd/yyyy hh:mm tt";
+            dateTimePicker.MinDate = DateTime.Now;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -27,7 +30,7 @@ namespace BasicFacebookFeatures
 
         private void handleOKClick()
         {
-            SelectedDateTime = m_DateTimePicker.Value;
+            SelectedDateTime = dateTimePicker.Value;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -45,36 +48,36 @@ namespace BasicFacebookFeatures
 
         private void InitializeComponent()
         {
-            m_DateTimePicker = new DateTimePicker();
-            m_ButtonOk = new Button();
-            m_ButtonCancel = new Button();
+            dateTimePicker = new DateTimePicker();
+            buttonOK = new Button();
+            buttonCancel = new Button();
             SuspendLayout();
 
-            m_DateTimePicker.Location = new Point(12, 12);
-            m_DateTimePicker.Name = "dateTimePicker";
-            m_DateTimePicker.Size = new Size(305, 20);
-            m_DateTimePicker.TabIndex = 0;
+            dateTimePicker.Location = new Point(12, 12);
+            dateTimePicker.Name = "dateTimePicker";
+            dateTimePicker.Size = new Size(305, 20);
+            dateTimePicker.TabIndex = 0;
 
-            m_ButtonOk.Location = new Point(161, 64);
-            m_ButtonOk.Name = "btnOk";
-            m_ButtonOk.Size = new Size(75, 23);
-            m_ButtonOk.TabIndex = 1;
-            m_ButtonOk.Text = "OK";
-            m_ButtonOk.UseVisualStyleBackColor = true;
-            m_ButtonOk.Click += new EventHandler(buttonOK_Click);
+            buttonOK.Location = new Point(161, 64);
+            buttonOK.Name = "btnOk";
+            buttonOK.Size = new Size(75, 23);
+            buttonOK.TabIndex = 1;
+            buttonOK.Text = "OK";
+            buttonOK.UseVisualStyleBackColor = true;
+            buttonOK.Click += new EventHandler(buttonOK_Click);
 
-            m_ButtonCancel.Location = new Point(242, 64);
-            m_ButtonCancel.Name = "btnCancel";
-            m_ButtonCancel.Size = new Size(75, 23);
-            m_ButtonCancel.TabIndex = 2;
-            m_ButtonCancel.Text = "Cancel";
-            m_ButtonCancel.UseVisualStyleBackColor = true;
-            m_ButtonCancel.Click += new EventHandler(buttonCancel_Click);
+            buttonCancel.Location = new Point(242, 64);
+            buttonCancel.Name = "btnCancel";
+            buttonCancel.Size = new Size(75, 23);
+            buttonCancel.TabIndex = 2;
+            buttonCancel.Text = "Cancel";
+            buttonCancel.UseVisualStyleBackColor = true;
+            buttonCancel.Click += new EventHandler(buttonCancel_Click);
 
             ClientSize = new Size(329, 94);
-            Controls.Add(m_ButtonCancel);
-            Controls.Add(m_ButtonOk);
-            Controls.Add(m_DateTimePicker);
+            Controls.Add(buttonCancel);
+            Controls.Add(buttonOK);
+            Controls.Add(dateTimePicker);
             Name = "TimedPostForm";
             ResumeLayout(false);
         }

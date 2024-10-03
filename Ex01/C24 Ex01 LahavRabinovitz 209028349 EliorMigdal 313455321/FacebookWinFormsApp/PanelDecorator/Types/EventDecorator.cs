@@ -1,19 +1,19 @@
 ﻿using BasicFacebookFeatures.CustomeData;
 using BasicFacebookFeatures.Properties;
-using FacebookWrapper.ObjectModel;
-using GMap.NET.WindowsForms.Markers;
-using GMap.NET.WindowsForms;
-using GMap.NET;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
-using System.Drawing;
 using BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types.ItemAdapter.Types;
+using BasicFacebookFeatures.TableDecorator;
+using BasicFacebookFeatures.TableDecorator.Decorators;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BasicFacebookFeatures.PanelDecorator.Types
 {
     public class EventDecorator : IPanelDecorator
     {
+        private readonly EventData r_EventData;
         private Collection<Control> m_Controls;
         public Collection<Control> Controls
         {
@@ -30,222 +30,114 @@ namespace BasicFacebookFeatures.PanelDecorator.Types
             }
         }
 
-        public EventData EventData { get; set; }
-
         public EventDecorator(EventAdapter i_EventWrapper)
         {
-            EventData = i_EventWrapper.EventData;
+            r_EventData = i_EventWrapper.EventData;
         }
 
         private void initializeControls()
         {
-            TableLayoutPanel tableLayoutPanel = initializeGrid();
+            IGrid outerGrid = new CoreGrid(1, 4);
 
-            initializeLocation(ref tableLayoutPanel);
-            initializeInfoColumn(ref tableLayoutPanel);
-            initializeFriendsColumn(ref tableLayoutPanel);
+            initializePictureColumn(outerGrid);
+            initializeLocationColumn(outerGrid);
+            initializeInfoColumn(outerGrid);
+            initializeAttendingColumn(outerGrid);
 
-            m_Controls.Add(tableLayoutPanel);
+            m_Controls.Add(outerGrid.Grid);
         }
 
-        private TableLayoutPanel initializeGrid()
+        private void initializePictureColumn(IGrid i_OuterGrid)
         {
-            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                ColumnCount = 4,
-                RowCount = 1,
-                ColumnStyles =
-                {
-                    new ColumnStyle(SizeType.Percent, 25F),
-                    new ColumnStyle(SizeType.Percent, 25F),
-                    new ColumnStyle(SizeType.Percent, 25F),
-                    new ColumnStyle(SizeType.Percent, 25F)
-                },
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink
-            };
-
-            TableLayoutPanel innerTable = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                ColumnCount = 1,
-                RowCount = 2,
-                RowStyles =
-                {
-                    new ColumnStyle(SizeType.Percent, 80F),
-                    new ColumnStyle(SizeType.Percent, 20F)
-                },
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink
-            };
-
-            initializeEventPicture(ref innerTable);
-            initializeEventDate(ref innerTable);
-
-            tableLayoutPanel.Controls.Add(innerTable, 0, 0);
-
-            return tableLayoutPanel;
+            i_OuterGrid.Grid.Controls.Add
+            (
+                new LabelsGrid
+                (
+                    new PicturesGrid
+                    (
+                        new RatioGrid
+                        (
+                            new CoreGrid(2, 1), 
+                            new List<(int, float)>
+                            {
+                                (1, 80F), (2, 20F)
+                            }
+                        ),
+                        new List<(System.Drawing.Image i_Source, int i_Height, int i_Width)>
+                        {
+                            (Resources.summerbeach, 60, 60)
+                        }
+                    ),
+                    new Collection<string>
+                    {
+                        $"Date: {r_EventData.StartTime}"
+                    }
+                ).Grid, 0, 0
+            );
         }
 
-        private void initializeEventPicture(ref TableLayoutPanel io_Panel)
+        private void initializeLocationColumn(IGrid i_OuterGrid)
         {
-            PictureBox pictureBox = new PictureBox
-            {
-                Image = Resources.summerbeach,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                Dock = DockStyle.Fill,
-                Size = new Size(60, 60),
-                Margin = new Padding(5)
-            };
+            i_OuterGrid.Grid.Controls.Add
+            (
+                new LabelsGrid
+                (
+                    new GMapGrid
+                    (
+                        new RatioGrid
+                        (
+                            new CoreGrid(2, 1),
+                            new List<(int, float)>
+                            {
+                                (1, 80F), (2, 20F) 
+                            }
+                        ),
 
-            io_Panel.Controls.Add(pictureBox, 0, 0);
+                        (32.046954F, 34.761692F)
+                    ),
+                    new Collection<string>
+                    {
+                        $"Date: {r_EventData.StartTime}"
+                    }
+                ).Grid, 1, 0
+            );
         }
 
-        private void initializeEventDate(ref TableLayoutPanel io_Panel)
+        private void initializeInfoColumn(IGrid i_OuterGrid)
         {
-            Label dateLabel = new Label
-            {
-                Dock = DockStyle.Fill,
-                Text = $"Date: {EventData.StartTime}",
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = true
-            };
-
-            io_Panel.Controls.Add(dateLabel, 0, 1);
+            i_OuterGrid.Grid.Controls.Add
+            (
+                new LabelsGrid
+                (
+                    new CoreGrid(),
+                    new Collection<string>
+                    {
+                        $"Event: {r_EventData.Name}",
+                        $"Description: {r_EventData.Description}",
+                        $"Host: {r_EventData.HostName}",
+                        $"Duration: {r_EventData.EndTime - r_EventData.StartTime}",
+                    }
+                ).Grid, 2, 0
+            );
         }
 
-        private void initializeLocation(ref TableLayoutPanel io_Panel)
+        private void initializeAttendingColumn(IGrid i_OuterGrid)
         {
-            TableLayoutPanel innerTable = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                ColumnCount = 1,
-                RowCount = 2,
-                RowStyles =
-                {
-                    new RowStyle(SizeType.Percent, 80F),
-                    new RowStyle(SizeType.Percent, 20F)
-                }
-            };
-
-            GMapControl map = new GMapControl
-            {
-                Dock = DockStyle.Fill,
-                MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance,
-                Position = new PointLatLng(32.046954, 34.761692),
-                MinZoom = 0,
-                MaxZoom = 18,
-                Zoom = 12
-            };
-
-            GMapOverlay markersOverlay = new GMapOverlay("markers");
-            GMapMarker marker = new GMarkerGoogle(new PointLatLng(32.046954, 34.761692), GMarkerGoogleType.red);
-            markersOverlay.Markers.Add(marker);
-            map.Overlays.Add(markersOverlay);
-
-            Label eventLabel = new Label
-            {
-                Text = EventData.Location,
-                Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = true
-            };
-
-            innerTable.Controls.Add(map, 0, 0);
-            innerTable.Controls.Add(eventLabel, 0, 1);
-            
-            io_Panel.Controls.Add(innerTable, 1, 0);
-        }
-
-        private void initializeInfoColumn(ref TableLayoutPanel io_Panel)
-        {
-            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
-            {
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
-                AutoScroll = true,
-                Dock = DockStyle.Fill
-            };
-
-            Label titleLabel = new Label
-            {
-                Dock = DockStyle.Fill,
-                Text = $"Event: {EventData.Name}",
-                TextAlign = ContentAlignment.MiddleLeft,
-                AutoSize = true
-            };
-
-            Label descriptionLabel = new Label
-            {
-                Dock = DockStyle.Fill,
-                Text = $"Description: {EventData.Description}",
-                TextAlign = ContentAlignment.MiddleLeft,
-                AutoSize = true
-            };
-
-            Label hostsLabel = new Label
-            {
-                Dock = DockStyle.Fill,
-                Text = $"Host: {EventData.HostName}",
-                TextAlign = ContentAlignment.MiddleLeft,
-                AutoSize = true
-            };
-
-            Label durationLabel = new Label
-            {
-                Dock = DockStyle.Fill,
-                Text = $"Duration: {EventData.EndTime - EventData.StartTime}",
-                TextAlign = ContentAlignment.MiddleLeft,
-                AutoSize = true
-            };
-
-            flowLayoutPanel.Controls.Add(titleLabel);
-            flowLayoutPanel.Controls.Add(hostsLabel);
-            flowLayoutPanel.Controls.Add(durationLabel);
-            flowLayoutPanel.Controls.Add(descriptionLabel);
-
-            io_Panel.Controls.Add(flowLayoutPanel, 2, 0);
-        }
-
-        private void initializeFriendsColumn(ref TableLayoutPanel io_Panel)
-        {
-            TableLayoutPanel outerPanel = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                ColumnCount = 1,
-                RowCount = 2,
-                RowStyles =
-                {
-                    new RowStyle(SizeType.Percent, 50F),
-                    new RowStyle(SizeType.Percent, 50F)
-                }
-            };
-
-            Label attendingInfo = new Label
-            {
-                Text = $"Attending: {EventData.Attending}{Environment.NewLine}Interested: {EventData.Interested}",
-                Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = true
-            };
-
-            ListBox friendsAttending = new ListBox
-            {
-                SelectionMode = SelectionMode.None,
-                DisplayMember = "Name",
-                Dock = DockStyle.Fill
-            };
-
-            foreach (EventData.Attendee atendee in EventData.Attendees)
-            {
-                friendsAttending.Items.Add(atendee);
-            }
-
-            outerPanel.Controls.Add(attendingInfo, 0, 0);
-            outerPanel.Controls.Add(friendsAttending, 0, 1);
-
-            io_Panel.Controls.Add(outerPanel, 3, 0);
+            i_OuterGrid.Grid.Controls.Add
+            (
+                new ListBoxGrid
+                (
+                    new LabelsGrid
+                    (
+                        new CoreGrid(2, 1), new Collection<string>
+                        {
+                            $"Attending: {r_EventData.Attending}{Environment.NewLine}" +
+                            $"Interested: {r_EventData.Interested}"
+                        }
+                    ), 
+                    r_EventData.Attendees.Select(atendee => atendee.Name).ToList()
+                ).Grid, 3, 0
+            );
         }
     }
 }

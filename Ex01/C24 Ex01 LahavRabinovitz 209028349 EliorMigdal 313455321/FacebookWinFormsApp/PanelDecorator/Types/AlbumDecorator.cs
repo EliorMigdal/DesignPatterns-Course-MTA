@@ -7,6 +7,7 @@ namespace BasicFacebookFeatures.PanelDecorator.Types
 {
     public class AlbumDecorator : IPanelDecorator
     {
+        private readonly Album r_Album;
         private Collection<Control> m_Controls = null;
         public Collection<Control> Controls
         {
@@ -23,11 +24,9 @@ namespace BasicFacebookFeatures.PanelDecorator.Types
             }
         }
 
-        public Album Album { get; set; }
-
         public AlbumDecorator(Album i_Album)
         {
-            Album = i_Album;
+            r_Album = i_Album;
         }
 
         private void initializeControls()
@@ -42,7 +41,7 @@ namespace BasicFacebookFeatures.PanelDecorator.Types
                 Dock = DockStyle.Fill
             };
 
-            foreach (Photo photo in Album.Photos)
+            foreach (Photo photo in r_Album.Photos)
             {
                 PictureBox selectedPictureBox = new PictureBox
                 {

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonLogin = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -52,6 +53,7 @@
             this.postButton = new System.Windows.Forms.Button();
             this.newPostTextBox = new System.Windows.Forms.TextBox();
             this.wallListBox = new System.Windows.Forms.ListBox();
+            this.postBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.homeTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedElementPictureBox)).BeginInit();
@@ -60,6 +62,7 @@
             this.wallTab.SuspendLayout();
             this.postInfoLayoutPanel.SuspendLayout();
             this.postDataLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.postBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonLogin
@@ -351,6 +354,7 @@
             // 
             // wallListBox
             // 
+            this.wallListBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.postBindingSource, "Message", true));
             this.wallListBox.Enabled = false;
             this.wallListBox.FormattingEnabled = true;
             this.wallListBox.ItemHeight = 18;
@@ -359,6 +363,10 @@
             this.wallListBox.Size = new System.Drawing.Size(439, 436);
             this.wallListBox.TabIndex = 0;
             this.wallListBox.SelectedIndexChanged += new System.EventHandler(this.wallListBox_SelectedIndexChanged);
+            // 
+            // postBindingSource
+            // 
+            this.postBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Post);
             // 
             // FormMain
             // 
@@ -381,6 +389,7 @@
             this.wallTab.PerformLayout();
             this.postInfoLayoutPanel.ResumeLayout(false);
             this.postDataLayoutPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.postBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -411,6 +420,7 @@
         private System.Windows.Forms.TableLayoutPanel postInfoLayoutPanel;
         private System.Windows.Forms.TableLayoutPanel postDataLayoutPanel;
         private System.Windows.Forms.ListBox commentsListBox;
+        private System.Windows.Forms.BindingSource postBindingSource;
     }
 }
 

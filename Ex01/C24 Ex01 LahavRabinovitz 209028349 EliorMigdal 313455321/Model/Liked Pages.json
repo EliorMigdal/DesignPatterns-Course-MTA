@@ -1,0 +1,24 @@
+{
+  "LikedPages": [
+    {
+      "Name": "Tech Enthusiasts",
+      "Category": "Technology",
+      "Posts": [
+        "Exploring the latest in AI technology!",
+        "Join us for a webinar on blockchain technology.",
+        "New gadget review: The best smartphone of 2024."
+      ],
+      "Picture": "https://example.com/pictures/tech_enthusiasts.jpg"
+    },
+    {
+      "Name": "Travel Lovers",
+      "Category": "Travel",
+      "Posts": [
+        "Top 10 destinations for 2024!",
+        "Share your favorite travel photo in the comments!",
+        "Travel tips for backpackers: What to pack?"
+      ],
+      "Picture": "https://example.com/pictures/travel_lovers.jpg"
+    }
+  ]
+}

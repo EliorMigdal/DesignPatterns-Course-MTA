@@ -4,6 +4,7 @@ using BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types.ItemAdapter.T
 using FacebookWrapper.ObjectModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types
 {
@@ -12,6 +13,13 @@ namespace BasicFacebookFeatures.Logic.UserProxy.UserItemsAdapter.Types
         public string Name => "Events";
         private readonly User m_UserData;
         private readonly Collection<IUserItemAdapter> r_EventsCollection = new Collection<IUserItemAdapter>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string i_PropertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(i_PropertyName));
+        }
 
         public Collection<IUserItemAdapter> ItemAdapterCollection
         {

@@ -8,6 +8,7 @@ namespace BasicFacebookFeatures.Logic.Settings
         public bool RememberUser { get; set; } = false;
         public string Token { get; set; } = string.Empty;
         private static readonly string sr_FileName = "appSettings.xml";
+        private static AppSettings s_Instance;
 
         private AppSettings() { }
 
@@ -22,18 +23,24 @@ namespace BasicFacebookFeatures.Logic.Settings
 
         public static AppSettings LoadAppSettings()
         {
-            AppSettings appSettings = new AppSettings();
-
-            if (File.Exists(sr_FileName))
+            if (s_Instance == null)
             {
-                using (Stream stream = new FileStream(sr_FileName, FileMode.Open))
+                if (File.Exists(sr_FileName))
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(AppSettings));
-                    appSettings = xmlSerializer.Deserialize(stream) as AppSettings;
+                    using (Stream stream = new FileStream(sr_FileName, FileMode.Open))
+                    {
+                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(AppSettings));
+                        s_Instance = xmlSerializer.Deserialize(stream) as AppSettings;
+                    }
+                }
+
+                else
+                {
+                    s_Instance = new AppSettings();
                 }
             }
 
-            return appSettings;
+            return s_Instance;
         }
     }
 }

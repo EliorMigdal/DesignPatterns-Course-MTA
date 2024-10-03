@@ -1,0 +1,38 @@
+{
+  "Friends": [
+    {
+      "Name": "John Doe",
+      "ProfilePicture": "https://example.com/johndoe.jpg",
+      "Posts": [
+        "Had a great day at the park!",
+        "Loving the new coffee place in town."
+      ],
+      "Friends": [
+        "Jane Doe",
+        "Mike Smith"
+      ],
+      "Pictures": [
+        "https://example.com/photo1.jpg",
+        "https://example.com/photo2.jpg"
+      ],
+      "IsCloseFriend": true
+    },
+    {
+      "Name": "Jane Doe",
+      "ProfilePicture": "https://example.com/janedoe.jpg",
+      "Posts": [
+        "Just finished a new book!",
+        "Trying out a new recipe."
+      ],
+      "Friends": [
+        "John Doe",
+        "Mike Smith"
+      ],
+      "Pictures": [
+        "https://example.com/photo3.jpg",
+        "https://example.com/photo4.jpg"
+      ],
+      "IsCloseFriend": false
+    }
+  ]
+}

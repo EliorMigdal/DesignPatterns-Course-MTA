@@ -133,6 +133,15 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListBoxDecorator\ListBoxDecorator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ListBoxDecorator\Types\FilterableListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ListBoxDecorator\Types\SortableListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Logic\Comperator\IComperator.cs" />
     <Compile Include="Logic\Comperator\Types\CommentsComperator.cs" />
     <Compile Include="Logic\Comperator\Types\LikesComperator.cs" />
@@ -163,6 +172,15 @@
     <Compile Include="PanelDecorator\Types\LikedPageDecorator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableDecorator\Decorators\ButtonGrid.cs" />
+    <Compile Include="TableDecorator\Decorators\GMapGrid.cs" />
+    <Compile Include="TableDecorator\Decorators\LabelsGrid.cs" />
+    <Compile Include="TableDecorator\Decorators\ListBoxGrid.cs" />
+    <Compile Include="TableDecorator\Decorators\PicturesGrid.cs" />
+    <Compile Include="TableDecorator\Decorators\RatioGrid.cs" />
+    <Compile Include="TableDecorator\CoreGrid.cs" />
+    <Compile Include="TableDecorator\GridDecorator.cs" />
+    <Compile Include="TableDecorator\IGrid.cs" />
     <Compile Include="TimedPostForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,7 +221,11 @@
     <Content Include="Resources\tech.png" />
     <Content Include="Resources\summerbeach.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="FilterStrategy\" />
+    <Folder Include="Properties\DataSources\" />
+    <Folder Include="SortStrategy\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
